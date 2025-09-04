@@ -2,10 +2,10 @@ export const windowSize = () => {
     const d = document,
         e = d.documentElement,
         g = d.getElementsByTagName('body')[0],
-        x = e.clientWidth || g.clientWidth,
-        y = e.clientHeight || g.clientHeight;
+        w = e.clientWidth || g.clientWidth,
+        h = e.clientHeight || g.clientHeight;
 
-    return { x, y };
+    return { w, h };
 };
 
 export const clientRect = selector => {
@@ -53,19 +53,5 @@ export const isAppleDevice = () => /iPad|iPhone|iPod/.test(navigator.userAgent) 
 export const scrollClass = () => `root-scroll ${isTouchable() ? 'root-scroll-mobile' : ''}`;
 
 export const post = (fn, ms) => setTimeout(fn, ms);
-
-export const samePos = (one, two) => one?.row === two.row && one?.col === two.col;
-
-export const samePair = (p1, p2) => {
-    if (!p1 || !p2) {
-        return false;
-    }
-
-    if (p1.pos1 === p2.pos1 && p1.pos2 === p2.pos2) {
-        return true;
-    }
-
-    return false;
-};
 
 export const range = (n) => [...Array(n + 1).keys()].slice(1);

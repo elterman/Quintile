@@ -31,7 +31,7 @@
 
 <div
     id={op.label}
-    class={['button-base no-highlight button clip-text background-gold', { x }]}
+    class={['button-base no-highlight button clip-text background-gold-radial', { x }]}
     style={`${op.style}; ${style}`}
     onpointerdown={() => (scale = 0.8)}>
     {#if x}

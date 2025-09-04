@@ -1,15 +1,7 @@
 <script>
     import { fade } from 'svelte/transition';
-    import { windowSize } from './utils';
-    import BMG from '$lib/images/BMG.webp';
 
-    let bmgWidth = $state(0);
     let classes = $state('splash');
-
-    $effect(() => {
-        let { x: wx, y: wy } = windowSize();
-        bmgWidth = Math.min(300, Math.min(wx, wy) * 0.6);
-    });
 
     const onPointerDown = () => {
         localStorage.clear();
@@ -18,22 +10,29 @@
 </script>
 
 <div class={classes} out:fade={{ duration: 300 }} onpointerdown={onPointerDown}>
-    <img src={BMG} alt='' width={bmgWidth} />
+    <div class="bmg"></div>
 </div>
 
 <style>
     .splash {
-        grid-area: 1/1;
-        display: grid;
+        position: absolute;
         background: #8a0000;
         background-image: radial-gradient(transparent, black 100%);
-        place-content: center;
-        color: #f0f8ff;
         z-index: 300;
         transition: background-color 0.3s;
     }
 
     .dark {
         background-color: #500000;
+    }
+
+    .bmg {
+        width: 100dvw;
+        height: 100dvh;
+        background-image: url($lib/images/BMG.webp);
+        background-size: calc(min(300px, min(100dvh, 100dvw) * 0.6));
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
     }
 </style>

@@ -1,21 +1,19 @@
 <script>
-    import Question from '$lib/images/Question.webp';
     import MusicOff from '$lib/images/Music Off.webp';
     import MusicOn from '$lib/images/Music On.webp';
+    import Question from '$lib/images/Question.webp';
     import ResetStats from '$lib/images/Reset Stats.webp';
     import SoundOff from '$lib/images/Sound Off.webp';
     import SoundOn from '$lib/images/Sound On.webp';
     import Surrender from '$lib/images/Surrender.webp';
-    import { PROMPT_RESET_STATS, PROMPT_SURRENDER, START_PAGE } from './const';
-    import { cleanupDemo } from './Demo/demo shared.svelte';
+    import { PROMPT_RESET_STATS, PROMPT_SURRENDER } from './const';
     import { persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, _stats, ss } from './state.svelte';
     import ToolButton from './Tool Button.svelte';
 
     const onHelp = () => {
-        cleanupDemo();
-        ss.page = START_PAGE;
+        ss.intro = true;
     };
 
     const onSurrender = () => {

@@ -1,9 +1,7 @@
 <script>
-    import Frame from '$lib/images/Frame.webp';
-    import { START_PAGE } from '../const';
     import GamePage from '../Game Page.svelte';
+    import Intro from '../Intro.svelte';
     import Splash from '../Splash.svelte';
-    import StartPage from '../Start Page.svelte';
     import { ss } from '../state.svelte';
     import { post, underMouse, windowSize } from '../utils';
 
@@ -58,35 +56,38 @@
     };
 </script>
 
+<div class="vignette"></div>
 <div class="app" onpointerdown={onPointerDown}>
-    <!-- <img class="frame" src={Frame} alt=""/> -->
-    <div class="vignette"></div>
-    <GamePage />
-
-    {#if ss.page === START_PAGE}
-        <StartPage />
-    {/if}
-
     {#if splash}
         <Splash />
+    {:else}
+        <div class="content" style="scale: {scale};">
+            <div class="frame"></div>
+            <GamePage />
+            <Intro />
+            {#if !ss.intro}
+                <div class="disclaimer">
+                    <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
+                </div>
+            {/if}
+        </div>
     {/if}
 </div>
 
 <style>
-    :root {
-        --gold: #ffe4ad;
-        --silver: #dfe1e5;
-        --bronze: #eeae93;
-        --background: #3c2213;
-        --aqua: #adffe4;
-        --pink: #ffc0cb;
-        --blue: #c0cbff;
-    }
-
     :global {
         body {
             margin: 0;
             overflow: hidden;
+            --gold: #ffe4ad;
+            --silver: #dfe1e5;
+            --bronze: #eeae93;
+            --background: #3c2213;
+            --aqua: #adffe4;
+            --pink: #ffc0cb;
+            --blue: #c0cbff;
+            background: var(--background);
+            color: var(--bronze);
         }
 
         .button-base {
@@ -131,6 +132,9 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            background-size: cover;
+            background-position: center;
         }
 
         .background-aqua-radial {
@@ -177,25 +181,49 @@
         overflow: hidden;
         touch-action: manipulation;
         outline: none !important;
-        background: var(--background);
         background-image: url('$lib/images/Pattern.webp');
         background-size: 400px;
+        place-content: center;
     }
 
     .vignette {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(transparent, black 300%);
+    }
+
+    .content {
         grid-area: 1/1;
-        background-image: radial-gradient(transparent, black 150%);
+        display: grid;
+        place-content: center;
+        touch-action: none;
     }
 
     .frame {
         grid-area: 1/1;
         place-self: center;
-        opacity: 0.0;
         touch-action: none;
+        width: 450px;
+        height: 788px;
+        background: #00000050;
+    }
+
+    .disclaimer {
+        grid-area: 1/1;
+        place-self: end center;
+        margin-right: 25px;
+        font-family: SS3;
+        font-size: 11px;
+        transform: translateY(-10px);
+        display: grid;
+        justify-items: center;
+        gap: 3px;
+        opacity: 0.8;
     }
 
     @font-face {
-        font-family: 'Source Sans 3';
+        font-family: SS3;
         src: url('$lib/fonts/Source Sans 3.ttf');
     }
 

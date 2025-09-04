@@ -1,8 +1,8 @@
-import { APP_STATE, PROMPT_PLAY_AGAIN, START_PAGE } from './const';
+import { APP_STATE, PROMPT_PLAY_AGAIN } from './const';
 
 export const ss = $state({
     mode: 1,
-    page: START_PAGE,
+    intro: true,
     steps: 0,
     turns: [0, 0, 0, 0, 0, 0, 0],
     score: () => ss.steps - ss.par,

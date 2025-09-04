@@ -39,7 +39,7 @@
     .item {
         width: 94%;
         box-sizing: border-box;
-        font-family: 'Source Sans 3';
+        font-family: SS3;
         font-size: 17px;
         border-radius: 50vh;
         height: 90%;

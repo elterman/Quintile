@@ -1,30 +1,25 @@
 <script>
-    import Title from '$lib/images/Title.webp';
     import { fade } from 'svelte/transition';
-    import { GAME_PAGE, YOU_GAVE_UP } from './const';
-    import { cleanupDemo } from './Demo/demo shared.svelte';
-    import Help from './Help.svelte';
+    import { YOU_GAVE_UP } from './const';
     import PromptPanel from './Prompt Panel.svelte';
     import { calculatePar, dayOfYear, isSolved, onStart, persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _stats, ss } from './state.svelte';
-    import { focusOnApp, post, windowSize } from './utils';
+    import { post } from './utils';
 
-    let content = $state(null);
-    let scale = $state(1);
+    const hi = '<span style=\'color: var(--aqua);\'>';
+    const gold = '<span style=\'color: var(--gold);\'>';
+    const blue = '<span style=\'color: var(--blue);\'>';
+    const ul = '<ul style="margin: 15px 0 0 0;">';
+    const li = '<li style="margin: 10px 0 0 -20px;">';
 
-    $effect(() => {
-        post(() => {
-            const { y: wy } = windowSize();
-            const pageHi = content.getBoundingClientRect().height + 70;
-
-            if (pageHi > wy) {
-                scale = wy / pageHi;
-            }
-        });
-
-        focusOnApp();
-    });
+    const CONTENT = `
+        <span>Rotate ${hi}clusters of three</span> connected tiles until the ${hi}sum of each color group</span> matches the number at the ${hi}center</span>.</span>
+        ${ul}
+        ${li}Tap a ${gold}yellow</span> tile to rotate the cluster ${gold}clockwise</span>.</li>
+        ${li}Tap a ${blue}blue</span> tile to rotate it ${blue}counterclockwise</span>.</li>
+        ${li}Solve the puzzle in as few steps as possible. </li>
+        </ul>`;
 
     const reloadGame = (job) => {
         ss.sum = job.sum;
@@ -79,9 +74,7 @@
             _sound.playMusic();
         }
 
-        cleanupDemo();
-
-        ss.page = GAME_PAGE;
+        delete ss.intro;
         post(() => (ss.seenGamePage = true));
 
         if (ss.cells) {
@@ -98,32 +91,50 @@
     };
 </script>
 
-<div class="start-page" in:fade={{ duration: 100 }} out:fade={{ duration: 200 }}>
-    <div class="content" bind:this={content} style="transform: scale({scale})">
-        <img class="title" src={Title} alt="" />
-        <Help />
-        <PromptPanel ops={[{ label: ss.cells ? 'back to game' : 'play', onClick: onPlay }]} />
+{#if ss.intro}
+    <div class="intro" in:fade>
+        <div class="title clip-text background-gold-radial">QUINTILE</div>
+        <div class="content" tabindex="-1">
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+            {@html CONTENT}
+        </div>
+        <div class="buttons">
+            <PromptPanel ops={[{ label: ss.cells ? 'back to game' : 'play', onClick: onPlay }]} />
+        </div>
     </div>
-</div>
+{/if}
 
 <style>
-    .start-page {
+    .intro {
+        z-index: 1;
+        place-self: center;
         grid-area: 1/1;
-        height: 100dvh;
-        display: grid;
-        place-content: center;
-        z-index: 100;
-    }
-
-    .content {
         display: grid;
         gap: 50px;
+        justify-items: center;
+        font-family: Trajan;
     }
 
     .title {
         grid-area: 1/1;
         place-self: center;
-        width: calc(min(80%, 300px));
+        filter: drop-shadow(3px 3px 5px black);
+        font-size: 64px;
+    }
+
+    .content {
+        grid-area: 2/1;
+        font-size: 22px;
+        display: grid;
+        align-content: start;
+        width: 330px;
+        color: var(--bronze);
+        filter: drop-shadow(2px 2px 3px black);
+    }
+
+    .buttons {
+        grid-area: 3/1;
+        place-self: center;
         filter: drop-shadow(3px 3px 5px black);
     }
 </style>
