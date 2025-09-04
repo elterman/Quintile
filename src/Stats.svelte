@@ -58,7 +58,7 @@
     }
 
     .reset {
-        /* background: var(--gold); */
+        color: var(--gold);
     }
 
     .label {

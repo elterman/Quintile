@@ -1,5 +1,5 @@
 <script>
-    import { BOARD_SIZE, HEX_DX, HEX_DY, ROOF, SPOTS, TDY, TILE_SIDE_DX } from './const';
+    import { BOARD_SIZE, SPOTS } from './const';
     import { isSolved, makePuzzle, onOver, persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import Spot from './Spot.svelte';

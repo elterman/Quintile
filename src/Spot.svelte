@@ -5,6 +5,7 @@
     const side = TILE_SIDE_DX;
     const width = side * TDX;
     const transform = $derived(`translate(${side * spot.dx}px, ${side * spot.dy}px)`);
+    // const background = spot.id === 1 ? 'none' : 
 </script>
 
 <div id={`spot-${spot.id}`} class="spot" style="transform: {transform};">
