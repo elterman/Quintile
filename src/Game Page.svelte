@@ -1,5 +1,4 @@
 <script>
-    import Arrows from './Arrows.svelte';
     import Board from './Board.svelte';
     import Prompt from './Prompt.svelte';
     import { ss } from './state.svelte';
@@ -13,7 +12,6 @@
     <Stats />
     <Steps />
     <Board />
-    <Arrows />
     <Sums/>
     <Prompt />
     <Toolbar />

@@ -1,9 +1,8 @@
 <script>
-    import Block from './Block.svelte';
-    import Cell from './Cell.svelte';
-    import { GOLD, HEX_DX, HEX_DY } from './const';
+    import { BOARD_SIZE, HEX_DX, HEX_DY, ROOF, SPOTS, TDY, TILE_SIDE_DX } from './const';
     import { isSolved, makePuzzle, onOver, persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
+    import Spot from './Spot.svelte';
     import { ss } from './state.svelte';
 
     $effect(() => {
@@ -37,21 +36,15 @@
         window.addEventListener('transitionend', onTransitionEnd);
         return () => window.removeEventListener('transitionend', onTransitionEnd);
     });
-
-    const transform = $derived(`rotate(${ss.turns[0] * 60}deg)`);
-    const duration = $derived(!ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.twist ? '0.5s' : '0s');
-
-    const style = $derived(`width: ${HEX_DX * 5}px; height: ${HEX_DY * 4}px; transform: ${transform}; transition-duration: ${duration};`);
 </script>
 
-<div id="board" class="board {ss.surrender ? 'surrender' : ''}" {style}>
+<div id="board" class="board {ss.surrender ? 'surrender' : ''}" style="width: {BOARD_SIZE}px;">
     <div id="board-content" class="content {ss.flip ? 'flipped' : ''}">
-        {#each [1, 2, 3, 4, 5, 6] as i (i)}
-            <Block bi={i} />
+        {#each [1, 2, 3] as i (i)}
+            {#each SPOTS[i - 1] as spot (spot.id)}
+                <Spot {spot} flip={i % 2 == 0} />
+            {/each}
         {/each}
-        {#if ss.cells}
-            <Cell --color={GOLD} --place="center" home={10} />
-        {/if}
     </div>
 </div>
 
@@ -61,6 +54,7 @@
         display: grid;
         justify-self: center;
         transition: linear transform 0.5s;
+        aspect-ratio: 1/1;
         /* background: #ffffff40; */
     }
 
