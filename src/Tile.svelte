@@ -1,8 +1,9 @@
 <script>
     import { fade } from 'svelte/transition';
-    import { SPOTS, TDX, PENT_SIDE_LENGTH } from './const';
-    import { decode } from './shared.svelte';
-    import { ss } from './state.svelte';
+    import { SPOTS, TDX, PENT_SIDE_LENGTH, BLOCKS } from './const';
+    import { decode, rotateTile } from './shared.svelte';
+    import { _prompt, ss } from './state.svelte';
+    import { _sound } from './sound.svelte';
 
     const { tile } = $props();
     const spot = $derived(SPOTS.find((spot) => spot.id === tile.sid));
@@ -11,7 +12,28 @@
     const disabled = $derived.by(() => spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
 
     const onPointerDown = () => {
-        //
+        _prompt.opacity = 0;
+
+        if (spot.cix < 2) {
+            return;
+        }
+
+        _sound.play('click');
+        ss.steps += 1;
+
+        const cw = spot.cix === 2;
+
+        const block = [...BLOCKS.find((b) => b.includes(spot.id))];
+        const tobs = block.map((sid) => ss.tiles.find((t) => t.sid === sid));
+
+        block.unshift(block[2]);
+        block.push(block[1]);
+
+        for (let i = 0; i < 3; i++) {
+            const tob = tobs[i];
+            const j = cw ? i + 2 : i;
+            tob.sid = block[j];
+        }
     };
 </script>
 
@@ -25,7 +47,8 @@
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 ? '+' : ''}
         {@const transform = `translateY(${spot.flip ? -10 : 15}%);`}
-        {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'}
+        <!-- {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'} -->
+        {@const duration = '0s'}
         <div
             class="char {plus || num === 0 ? '' : 'negative'} {ss.surrender ? 'surrender' : ''}"
             style="transform: {transform}; transition-duration: {duration};"
