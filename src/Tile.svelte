@@ -17,7 +17,7 @@
 <div id={`tile-${spot.id}`} class="tile no-highlight" style="transform: {transform};">
     <div class="pentagon {spot.flip ? 'flip' : ''} color-{spot.cix}" style="width: {width}px;"></div>
     {#if ss.tiles}
-        {@const chTransform = 'none'}
+        {@const chTransform = `translateY(${spot.flip ? -10 : 15}%);`}
         <div
             class="char {plus || num === 0 ? '' : 'negative'} {ss.surrender ? 'surrender' : ''}"
             style="transform: {chTransform}; transition-duration: {duration};"
@@ -33,6 +33,7 @@
         place-self: center;
         display: grid;
         place-content: center;
+        place-items: center;
         box-sizing: border-box;
         /* border: 1px solid tan; */
     }
@@ -40,10 +41,11 @@
     .pentagon {
         grid-area: 1/1;
         place-self: center;
-        aspect-ratio: 1.05;
+        aspect-ratio: 1.0515;
         clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
         transform: scale(0.97, 0.98);
         /* background: #ffffff48; */
+        display: grid;
     }
 
     .flip {
@@ -54,7 +56,7 @@
     .char {
         z-index: 1;
         grid-area: 1/1;
-        place-self: center;
+        /* place-self: start center; */
         font-family: Poppins;
         font-size: 22px;
         font-weight: bold;
