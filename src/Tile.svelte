@@ -1,26 +1,34 @@
 <script>
     import { fade } from 'svelte/transition';
-    import { SPOTS, TDX, TILE_SIDE_DX } from './const';
+    import { SPOTS, TDX, PENT_SIDE_LENGTH } from './const';
     import { decode } from './shared.svelte';
     import { ss } from './state.svelte';
 
     const { tile } = $props();
     const spot = $derived(SPOTS.find((spot) => spot.id === tile.sid));
-    const side = TILE_SIDE_DX;
-    const width = side * TDX;
-    const transform = $derived(`translate(${side * spot.dx}px, ${side * spot.dy}px)`);
-    const duration = $derived(!ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s');
-    const num = $derived(decode(tile.ch));
-    const plus = $derived(num > 0 ? '+' : '');
+    const width = PENT_SIDE_LENGTH * TDX;
+    const transform = $derived(`translate(${PENT_SIDE_LENGTH * spot.dx}px, ${PENT_SIDE_LENGTH * spot.dy}px)`);
+    const disabled = $derived.by(() => spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
+
+    const onPointerDown = () => {
+        //
+    };
 </script>
 
 <div id={`tile-${spot.id}`} class="tile no-highlight" style="transform: {transform};">
-    <div class="pentagon {spot.flip ? 'flip' : ''} color-{spot.cix}" style="width: {width}px;"></div>
+    <div
+        class="pentagon {spot.flip ? 'flip' : ''} color-{spot.cix} {disabled ? 'disabled' : ''} {ss.over ? 'pulse' : ''}"
+        style="width: {width}px;"
+        onpointerdown={onPointerDown}>
+    </div>
     {#if ss.tiles}
-        {@const chTransform = `translateY(${spot.flip ? -10 : 15}%);`}
+        {@const num = decode(tile.ch)}
+        {@const plus = num > 0 ? '+' : ''}
+        {@const transform = `translateY(${spot.flip ? -10 : 15}%);`}
+        {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'}
         <div
             class="char {plus || num === 0 ? '' : 'negative'} {ss.surrender ? 'surrender' : ''}"
-            style="transform: {chTransform}; transition-duration: {duration};"
+            style="transform: {transform}; transition-duration: {duration};"
             transition:fade>
             {plus + num}
         </div>
@@ -46,11 +54,33 @@
         transform: scale(0.97, 0.98);
         /* background: #ffffff48; */
         display: grid;
+        cursor: pointer;
+    }
+
+    .pentagon:hover {
+        filter: contrast(1.15) brightness(1.15);
     }
 
     .flip {
         /* clip-path: polygon(50% 100%, 100% 62%, 82% 0%, 18% 0%, 0% 62%); */
         rotate: 180deg;
+    }
+
+    .disabled {
+        pointer-events: none;
+    }
+
+    .pulse {
+        animation: pulse 0.2s alternate 6 ease-in-out;
+    }
+
+    @keyframes pulse {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(0.85);
+        }
     }
 
     .char {
