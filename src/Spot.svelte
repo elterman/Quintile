@@ -1,15 +1,14 @@
 <script>
     import { TDX, TILE_SIDE_DX } from './const';
 
-    const { spot, flip } = $props();
+    const { spot } = $props();
     const side = TILE_SIDE_DX;
     const width = side * TDX;
     const transform = $derived(`translate(${side * spot.dx}px, ${side * spot.dy}px)`);
-    // const background = spot.id === 1 ? 'none' : 
 </script>
 
 <div id={`spot-${spot.id}`} class="spot" style="transform: {transform};">
-    <div class="pentagon {flip ? 'flip' : ''}" style="width: {width}px;"></div>
+    <div class="pentagon {spot.flip ? 'flip' : ''} color-{spot.cix}" style="width: {width}px;"></div>
 </div>
 
 <style>
@@ -32,5 +31,24 @@
     .flip {
         /* clip-path: polygon(50% 100%, 100% 62%, 82% 0%, 18% 0%, 0% 62%); */
         rotate: 180deg;
+    }
+
+    .color-0 {
+        background: #0000;
+    }
+
+    .color-1 {
+        background-image: url('$lib/images/Purple Radial.webp');
+        background-size: cover;
+    }
+
+    .color-2 {
+        background-image: url('$lib/images/Gold Radial.webp');
+        background-size: cover;
+    }
+
+    .color-3 {
+        background-image: url('$lib/images/Blue Radial.webp');
+        background-size: cover;
     }
 </style>

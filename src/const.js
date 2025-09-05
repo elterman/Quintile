@@ -51,29 +51,23 @@ const FLOOR = TDY - ROOF;
 const OVERHANG = 0.309;
 const TRAD = 0.6882;
 export const TCY = TDY - TRAD;
-export const BOARD_SIZE = TILE_SIDE_DX * (TDY * 5 -  ROOF * 2);
+export const BOARD_SIZE = TILE_SIDE_DX * (TDY * 5 - ROOF * 2);
 
 export const SPOTS = [
-    [
-        { id: 1, dx: 0, dy: 0, adj: [2, 3, 4, 5, 6] },
-    ],
-    [
-        { id: 2, dx: TDX * 0.5, dy: -FLOOR, adj: [1, 8, 9] },
-        { id: 3, dx: TDX - OVERHANG, dy: ROOF, adj: [1, 4, 10] },
-        { id: 4, dx: 0, dy: TDY, adj: [1, 12, 13] },
-        { id: 5, dx: - (1 + OVERHANG), dy: ROOF, adj: [1, 14, 15] },
-        { id: 6, dx: -TDX * 0.5, dy: -FLOOR, adj: [1, 7, 16] },
-    ],
-    [
-        { id: 7, dx: -TDX * 0.5, dy: -(FLOOR + TDY), adj: [6, 18, 19] },
-        { id: 8, dx: TDX * 0.5, dy: -(FLOOR + TDY), adj: [2, 19, 20] },
-        { id: 9, dx: TDX + 0.5, dy: -TDY, adj: [2, 21, 22] },
-        { id: 10, dx: TDX + 1, dy: 0, adj: [3, 22, 23] },
-        { id: 11, dx: TDX + 0.5, dy: TDY, adj: [3, 24, 25] },
-        { id: 12, dx: TDX * 0.5, dy: FLOOR + TDY, adj: [4, 25, 26] },
-        { id: 13, dx: -TDX * 0.5, dy: FLOOR + TDY, adj: [4, 27, 28] },
-        { id: 14, dx: -(OVERHANG + 1 + TDX * 0.5), dy: TDY, adj: [5, 28, 29] },
-        { id: 15, dx: -(TDX + 1), dy: 0, adj: [5, 30, 31] },
-        { id: 16, dx: -(OVERHANG + 1 + TDX * 0.5), dy: -TDY, adj: [6, 17, 31] },
-    ]
+    { id: 1, dx: 0, dy: 0, adj: [2, 3, 4, 5, 6], cix: 0 },
+    { id: 2, flip: true, dx: TDX * 0.5, dy: -FLOOR, adj: [1, 8, 9], cix: 1 },
+    { id: 3, flip: true, dx: TDX - OVERHANG, dy: ROOF, adj: [1, 4, 10], cix: 1 },
+    { id: 4, flip: true, dx: 0, dy: TDY, adj: [1, 12, 13], cix: 1 },
+    { id: 5, flip: true, dx: - (1 + OVERHANG), dy: ROOF, adj: [1, 14, 15], cix: 1 },
+    { id: 6, flip: true, dx: -TDX * 0.5, dy: -FLOOR, adj: [1, 7, 16], cix: 1 },
+    { id: 7, dx: -TDX * 0.5, dy: -(FLOOR + TDY), adj: [6, 18, 19], cix: 2 },
+    { id: 8, dx: TDX * 0.5, dy: -(FLOOR + TDY), adj: [2, 19, 20], cix: 3 },
+    { id: 9, dx: TDX + 0.5, dy: -TDY, adj: [2, 21, 22], cix: 2 },
+    { id: 10, dx: TDX + 1, dy: 0, adj: [3, 22, 23], cix: 3 },
+    { id: 11, dx: TDX + 0.5, dy: TDY, adj: [3, 24, 25], cix: 2 },
+    { id: 12, dx: TDX * 0.5, dy: FLOOR + TDY, adj: [4, 25, 26], cix: 3 },
+    { id: 13, dx: -TDX * 0.5, dy: FLOOR + TDY, adj: [4, 27, 28], cix: 2 },
+    { id: 14, dx: -(OVERHANG + 1 + TDX * 0.5), dy: TDY, adj: [5, 28, 29], cix: 3 },
+    { id: 15, dx: -(TDX + 1), dy: 0, adj: [5, 30, 31], cix: 2 },
+    { id: 16, dx: -(OVERHANG + 1 + TDX * 0.5), dy: -TDY, adj: [6, 17, 31], cix: 3 },
 ];

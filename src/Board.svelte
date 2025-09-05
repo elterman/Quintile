@@ -40,11 +40,9 @@
 
 <div id="board" class="board {ss.surrender ? 'surrender' : ''}" style="width: {BOARD_SIZE}px;">
     <div id="board-content" class="content {ss.flip ? 'flipped' : ''}">
-        {#each [1, 2, 3] as i (i)}
-            {#each SPOTS[i - 1] as spot (spot.id)}
-                <Spot {spot} flip={i % 2 == 0} />
+            {#each SPOTS as spot (spot.id)}
+                <Spot {spot} />
             {/each}
-        {/each}
     </div>
 </div>
 

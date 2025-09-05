@@ -79,13 +79,13 @@
         body {
             margin: 0;
             overflow: hidden;
-            --gold: #ffe4ad;
+            --gold: #ffe087;
             --silver: #dfe1e5;
             --bronze: #eeae93;
             --background: #3c2213;
             --aqua: #adffe4;
             --pink: #ffc0cb;
-            --blue: #c0cbff;
+            --blue: #74d6fe;
             background: var(--background);
             color: var(--bronze);
         }
@@ -139,37 +139,30 @@
 
         .background-aqua-radial {
             background-image: url('$lib/images/Aqua Radial.webp');
-            background-size: cover;
         }
 
         .background-gold-radial {
             background-image: url('$lib/images/Gold Radial.webp');
-            background-size: cover;
         }
 
         .background-silver-radial {
             background-image: url('$lib/images/Silver Radial.webp');
-            background-size: cover;
         }
 
         .background-bronze-radial {
             background-image: url('$lib/images/Bronze Radial.webp');
-            background-size: cover;
         }
 
         .background-gold {
             background-image: url('$lib/images/Gold.webp');
-            background-size: cover;
         }
 
         .background-silver {
             background-image: url('$lib/images/Silver.webp');
-            background-size: cover;
         }
 
         .background-bronze {
             background-image: url('$lib/images/Bronze.webp');
-            background-size: cover;
         }
     }
 
