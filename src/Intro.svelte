@@ -146,7 +146,7 @@
     .ops {
         grid-area: 3/1;
         place-self: center;
-        /* filter: drop-shadow(3px 3px 5px black); */
+        filter: drop-shadow(2px 2px 3px black);
         display: grid;
         gap: 10px;
     }

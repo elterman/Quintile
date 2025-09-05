@@ -82,7 +82,8 @@
             --gold: #ffe087;
             --silver: #dfe1e5;
             --bronze: #eeae93;
-            --background: #3c2213;
+            /* --background: #3c2213; */
+            --background: #27160c;
             --aqua: #adffe4;
             --pink: #ffc0cb;
             --blue: #74d6fe;
@@ -199,7 +200,7 @@
         touch-action: none;
         width: 450px;
         height: 788px;
-        background: #00000050;
+        /* background: #00000050; */
     }
 
     .disclaimer {
