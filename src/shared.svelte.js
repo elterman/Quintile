@@ -201,12 +201,12 @@ export const onRotateGrid = (cw) => {
 };
 
 export const makePuzzle = () => {
-    const initial = () => ({ sum: ss.sum, cells: cloneDeep(ss.cells), turns: cloneDeep(ss.turns) });
+    const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), turns: cloneDeep(ss.turns) });
 
-if (ss.replay) {
-        const { sum, cells, turns } = ss.initial;
+    if (ss.replay) {
+        const { sum, tiles, turns } = ss.initial;
         ss.sum = sum;
-        ss.cells = cloneDeep(cells);
+        ss.tiles = cloneDeep(tiles);
         ss.turns = cloneDeep(turns);
     } else {
         randomPuzzle();
@@ -218,12 +218,10 @@ if (ss.replay) {
 };
 
 export const onStart = (replay = false) => {
-    // makePool();
-
     _sound.play('dice');
     over = false;
 
-    if (ss.cells) {
+    if (ss.tiles) {
         ss.flip = true;
 
         if (replay) {
@@ -280,14 +278,6 @@ export const sumAt = i => {
     const row = word2row(word);
 
     return rowSum(row);
-};
-
-export const dayOfYear = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const day = (Date.UTC(year, date.getMonth(), date.getDate()) - Date.UTC(year, 0, 0)) / 24 / 60 / 60 / 1000;
-
-    return day;
 };
 
 export const calculatePar = () => {

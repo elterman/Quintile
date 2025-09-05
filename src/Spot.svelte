@@ -25,30 +25,11 @@
         aspect-ratio: 1.05;
         clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
         transform: scale(0.97, 0.98);
-        background: #ffffff48;
+        /* background: #ffffff48; */
     }
 
     .flip {
         /* clip-path: polygon(50% 100%, 100% 62%, 82% 0%, 18% 0%, 0% 62%); */
         rotate: 180deg;
-    }
-
-    .color-0 {
-        background: #0000;
-    }
-
-    .color-1 {
-        background-image: url('$lib/images/Purple Radial.webp');
-        background-size: cover;
-    }
-
-    .color-2 {
-        background-image: url('$lib/images/Gold Radial.webp');
-        background-size: cover;
-    }
-
-    .color-3 {
-        background-image: url('$lib/images/Blue Radial.webp');
-        background-size: cover;
     }
 </style>

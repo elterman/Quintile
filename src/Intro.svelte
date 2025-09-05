@@ -2,7 +2,7 @@
     import { fade } from 'svelte/transition';
     import { YOU_GAVE_UP } from './const';
     import PromptPanel from './Prompt Panel.svelte';
-    import { calculatePar, dayOfYear, isSolved, onStart, persist } from './shared.svelte';
+    import { calculatePar, isSolved, onStart } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
@@ -54,18 +54,7 @@
             _sound.sfx = job.sfx;
             _sound.music = job.music;
 
-            ss.day = job.day;
-
-            const doy = dayOfYear();
-
-            if (ss.day === doy) {
-                ss.replay = job.replay;
-                reloadGame(job);
-            } else {
-                localStorage.clear();
-                ss.day = doy;
-                persist(true);
-            }
+            reloadGame(job);
         }
     };
 
@@ -85,7 +74,9 @@
         }
     };
 
-    const onPlay = () => {
+    const onPlay = (mode) => {
+        ss.mode = mode;
+
         loadGame();
         onGoToGame();
     };
@@ -100,16 +91,16 @@
         </div>
         <div class="ops">
             <div class="op">
-                <PromptPanel ops={[{ label: 'easy', onClick: onPlay }]} />
-                <span class='sub-op'>Only two clusters are rotatable</span>
+                <PromptPanel ops={[{ label: 'easy', onClick: () => onPlay(1) }]} />
+                <span class="sub-op">Only two clusters are rotatable</span>
             </div>
             <div class="op">
-                <PromptPanel ops={[{ label: 'still easy', onClick: onPlay }]} />
-                <span class='sub-op'>Only three clusters are rotatable</span>
+                <PromptPanel ops={[{ label: 'still easy', onClick: () => onPlay(2) }]} />
+                <span class="sub-op">Only three clusters are rotatable</span>
             </div>
             <div class="op">
-                <PromptPanel ops={[{ label: 'not so easy', onClick: onPlay }]} />
-                <span class='sub-op'>All clusters are rotatable</span>
+                <PromptPanel ops={[{ label: 'not so easy', onClick: () => onPlay(3) }]} />
+                <span class="sub-op">All clusters are rotatable</span>
             </div>
         </div>
     </div>

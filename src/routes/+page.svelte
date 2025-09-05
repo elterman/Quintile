@@ -165,6 +165,25 @@
         .background-bronze {
             background-image: url('$lib/images/Bronze.webp');
         }
+
+        .color-0 {
+            background: #0000;
+        }
+
+        .color-1 {
+            background-image: url('$lib/images/Purple Radial.webp');
+            background-size: cover;
+        }
+
+        .color-2 {
+            background-image: url('$lib/images/Gold Radial.webp');
+            background-size: cover;
+        }
+
+        .color-3 {
+            background-image: url('$lib/images/Blue Radial.webp');
+            background-size: cover;
+        }
     }
 
     .app {
@@ -207,8 +226,8 @@
         grid-area: 1/1;
         place-self: end center;
         margin-right: 25px;
-        font-family: SS3;
-        font-size: 11px;
+        font-family: Trajan;
+        font-size: 10px;
         transform: translateY(-10px);
         display: grid;
         justify-items: center;
@@ -217,8 +236,8 @@
     }
 
     @font-face {
-        font-family: SS3;
-        src: url('$lib/fonts/Source Sans 3.ttf');
+        font-family: Trajan;
+        src: url('$lib/fonts/Trajan.otf');
     }
 
     @font-face {
@@ -239,10 +258,5 @@
     @font-face {
         font-family: Roboto Mono;
         src: url('$lib/fonts/Roboto Mono.ttf');
-    }
-
-    @font-face {
-        font-family: Trajan;
-        src: url('$lib/fonts/Trajan.otf');
     }
 </style>
