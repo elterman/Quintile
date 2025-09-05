@@ -17,7 +17,7 @@
             {`${ave < 1 ? '' : '+'}`}
             <div class="flow"><NumberFlow value={ave} /></div>
         {:else}
-            <div class="flow">•</div>
+            <div class="bullet">•</div>
         {/if}
     </div>
     <div class={classes}>
@@ -26,7 +26,7 @@
             {`${_stats.best < 1 ? '' : '+'}`}
             <div class="flow"><NumberFlow value={_stats.best} /></div>
         {:else}
-            <div class="flow">•</div>
+            <div class="bullet">•</div>
         {/if}
     </div>
 </div>
@@ -68,5 +68,10 @@
 
     .flow {
         margin-bottom: -2px;
+    }
+
+    .bullet {
+        font-family: Poppins;
+        margin-top: -3px;
     }
 </style>

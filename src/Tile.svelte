@@ -1,12 +1,13 @@
 <script>
     import { fade } from 'svelte/transition';
-    import { SPOTS, TDX, PENT_SIDE_LENGTH, BLOCKS } from './const';
-    import { decode, rotateTile } from './shared.svelte';
-    import { _prompt, ss } from './state.svelte';
+    import { BLOCKS, PENT_SIDE_LENGTH, SPOTS, TDX } from './const';
+    import { decode } from './shared.svelte';
     import { _sound } from './sound.svelte';
+    import { _prompt, ss } from './state.svelte';
 
     const { tile } = $props();
     const spot = $derived(SPOTS.find((spot) => spot.id === tile.sid));
+    const center = $derived(spot.id === 1);
     const width = PENT_SIDE_LENGTH * TDX;
     const transform = $derived(`translate(${PENT_SIDE_LENGTH * spot.dx}px, ${PENT_SIDE_LENGTH * spot.dy}px)`);
     const disabled = $derived.by(() => spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
@@ -35,24 +36,22 @@
             tob.sid = block[j];
         }
     };
+
+    const pclass = $derived(
+        `pentagon ${spot.flip ? 'flip' : ''} ${center && ss.over ? 'over' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over ? 'pulse' : ''}`,
+    );
 </script>
 
 <div id={`tile-${spot.id}`} class="tile no-highlight" style="transform: {transform};">
-    <div
-        class="pentagon {spot.flip ? 'flip' : ''} color-{spot.cix} {disabled ? 'disabled' : ''} {ss.over ? 'pulse' : ''}"
-        style="width: {width}px;"
-        onpointerdown={onPointerDown}>
-    </div>
+    <div class={pclass} style="width: {width}px;" onpointerdown={onPointerDown}></div>
     {#if ss.tiles}
         {@const num = decode(tile.ch)}
-        {@const plus = num > 0 ? '+' : ''}
-        {@const transform = `translateY(${spot.flip ? -10 : 15}%);`}
+        {@const plus = num > 0 && !center ? '+' : ''}
+        {@const transform = `translateY(${spot.flip ? -10 : center ? 12 : 15}%);`}
         <!-- {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'} -->
         {@const duration = '0s'}
-        <div
-            class="char {plus || num === 0 ? '' : 'negative'} {ss.surrender ? 'surrender' : ''}"
-            style="transform: {transform}; transition-duration: {duration};"
-            transition:fade>
+        {@const _class = `char ${center ? (ss.over ? 'center' : 'gold') : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
+        <div class={_class} style="transform: {transform}; transition-duration: {duration};" transition:fade>
             {plus + num}
         </div>
     {/if}
@@ -93,6 +92,11 @@
         pointer-events: none;
     }
 
+    .over {
+        background-image: url('$lib/images/Aqua Radial.webp');
+        background-size: cover;
+    }
+
     .pulse {
         animation: pulse 0.2s alternate 6 ease-in-out;
     }
@@ -124,5 +128,14 @@
 
     .surrender {
         transition-delay: 0.5s;
+    }
+
+    .center,
+    .gold {
+        font-size: 32px;
+    }
+
+    .gold {
+        color: var(--gold);
     }
 </style>
