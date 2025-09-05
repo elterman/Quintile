@@ -25,13 +25,7 @@ export const BLOCKS = [
     { positions: [4, 9, 8], x: 0, y: 0.75 }
 ];
 
-export const ROWS = [
-    [1, 2, 3],
-    [4, 5, 6, 7],
-    [8, 9, 10, 11, 12],
-    [13, 14, 15, 16],
-    [17, 18, 19]
-];
+export const GROUPS = [[2, 3, 4, 5, 6], [7, 9, 11, 13, 15], [8, 10, 12, 14, 16]];
 
 export const TILE_SIDE_DX = 50;
 export const TDX = 1.618;

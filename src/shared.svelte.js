@@ -1,22 +1,22 @@
 import { cloneDeep, random, sample } from 'lodash-es';
-import { BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, PROMPT_PLAY_AGAIN, ROWS, ZERO_AT } from './const';
+import { BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
-import { post } from './utils';
+import { post, range } from './utils';
 
 let over = $state(false);
 
 export const initPoss = () => {
-    for (let i = 0; i < ss.cells.length; i++) {
-        ss.cells[i].pos = i + 1;
+    for (let i = 0; i < ss.tiles.length; i++) {
+        ss.tiles[i].id = i + 1;
     }
 };
 
 export const decode = ch => CYPHER.indexOf(ch) - ZERO_AT;
 
-const rowSum = (row) => row.reduce((sum, n) => sum + n, 0);
+const groupSum = (group) => group.reduce((sum, n) => sum + n, 0);
 
-const word2row = (word) => word.split('').map(decode);
+const word2group = (word) => word.split('').map(decode);
 
 export const onOver = () => {
     if (over) {
@@ -87,69 +87,72 @@ export const onOver = () => {
 };
 
 const randomPuzzle = () => {
-    ss.sum = sample([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    ss.sum = sample(range(10)) - 1;
 
-    const makeRow = (count) => {
-        let row;
+    const makeGroup = () => {
+        let group;
 
         do {
-            row = [];
+            group = [];
 
-            for (let i = 0; i < count - 1; i++) {
-                if (count === 5 && i == 2) {
-                    row.push(ss.sum);
-                } else {
-                    row.push(random(-9, 9));
-                }
+            for (let i = 0; i < 4; i++) {
+                group.push(random(-9, 9));
             }
 
-            row.push(ss.sum - rowSum(row));
-        } while (row[count - 1] < -9 || row[count - 1] > 9);
+            group.push(ss.sum - groupSum(group));
+        } while (group[4] < -9 || group[4] > 9);
 
-        return row;
+        return group;
     };
 
-    const makeWords = () => {
-        const row1 = makeRow(3);
-        const row2 = makeRow(4);
-        const row3 = makeRow(5);
-        const row4 = makeRow(4);
-        const row5 = makeRow(3);
+    const makeTiles = () => {
+        const gr1 = makeGroup();
+        const gr2 = makeGroup();
+        const gr3 = makeGroup();
 
         const words = [];
 
-        for (let row of [row1, row2, row3, row4, row5]) {
-            row = row.map(n => CYPHER[n + ZERO_AT]);
-            words.push(row.join(''));
+        for (let group of [gr1, gr2, gr3]) {
+            group = group.map(n => CYPHER[n + ZERO_AT]);
+            words.push(group.join(''));
         }
 
-        const chars = ((words[0] + words[1] + words[2] + words[3] + words[4]).split(''));
-        ss.cells = [];
+        const tiles = [{ id: 1, sid: 1, ch: ss.sum + '' }];
 
-        for (const [i, ch] of chars.entries()) {
-            ss.cells.push({ ch, pos: i + 1 });
+        const chars = ((words[0] + words[1] + words[2]).split(''));
+
+        for (let id = 2, i = 0; id <= 6; id++, i++) {
+            tiles.push({ id, sid: id, ch: chars[i] });
         }
 
-        return words;
+        for (let id = 7, i = 0; id <= 15; id += 2, i++) {
+            tiles.push({ id, sid: id, ch: chars[5 + i] });
+        }
+
+        for (let id = 8, i = 0; id <= 16; id += 2, i++) {
+            tiles.push({ id, sid: id, ch: chars[10 + i] });
+        }
+
+        ss.tiles = tiles;
     };
 
-    makeWords();
+    makeTiles();
 
-    do {
-        ss.turns = [random(0, 5), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2)];
+    // do {
+    //     ss.turns = [random(0, 5), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2)];
 
-        initPoss();
+    //     initPoss();
 
-        for (let i = 0; i < 7; i++) {
-            for (let j = 0; j < ss.turns[i]; j++) {
-                if (i) {
-                    onRotateBlock(i, true);
-                } else {
-                    onRotateGrid(true);
-                }
-            }
-        }
-    } while ([1, 2, 3, 4, 5].some(i => sumAt(i) === ss.sum));
+    //     for (let i = 0; i < 7; i++) {
+    //         for (let j = 0; j < ss.turns[i]; j++) {
+    //             if (i) {
+    //                 onRotateBlock(i, true);
+    //             } else {
+    //                 onRotateGrid(true);
+    //             }
+    //         }
+    //     }
+    // } while ([1, 2, 3, 4, 5].some(i => sumAt(i) === ss.sum));
 };
 
 export const onRotateBlock = (bi, cw,) => {
@@ -274,16 +277,18 @@ export const isSolved = () => {
 };
 
 export const sumAt = i => {
-    const word = wordAt(ROWS[i - 1]);
-    const row = word2row(word);
+    const word = wordAt(GROUPS[i - 1]);
+    const group = word2group(word);
 
-    return rowSum(row);
+    return groupSum(group);
 };
 
 export const calculatePar = () => {
-    const turns = calcSolutionTurns(ss.initial.turns);
-    const par = turns.reduce((sum, turns) => sum + Math.abs(turns), 0) + 1;
-    ss.par = Math.min(par, 7);
+    // const turns = calcSolutionTurns(ss.initial.turns);
+    // const par = turns.reduce((sum, turns) => sum + Math.abs(turns), 0) + 1;
+    // ss.par = Math.min(par, 7);
+
+    ss.par = 0;
 };
 
 const calcGridTurns = (gridTurns) => {
@@ -330,8 +335,8 @@ export const calcSolutionTurns = (turns) => {
     return solTurns;
 };
 
-const charAt = (pos) => {
-    return ss.cells?.find(cell => cell.pos === pos).ch;
+const charAt = (id) => {
+    return ss.tiles?.find(tile => tile.id === id).ch;
 };
 
 const wordAt = (poss) => poss.reduce((word, pos) => word + charAt(pos), '');

@@ -219,7 +219,7 @@
         touch-action: none;
         width: 450px;
         height: 788px;
-        /* background: #00000050; */
+        background: #00000050;
     }
 
     .disclaimer {

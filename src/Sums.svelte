@@ -1,26 +1,13 @@
 <script>
     import NumberFlow from '@number-flow/svelte';
-    import { ROWS } from './const';
     import { sumAt } from './shared.svelte';
     import { _prompt, ss } from './state.svelte';
-    import { post } from './utils';
-
-    const onPointerDown = (ri) => {
-        for (let i = 0; i < ss.cells.length; i++) {
-            const cell = ss.cells[i];
-
-            if (ROWS[ri - 1].includes(cell.pos)) {
-                ss.cells[i].blink = true;
-                post(() => delete ss.cells[i].blink, 1000);
-            }
-        }
-    };
 </script>
 
 <div class="sums {ss.over || _prompt.id ? 'hidden' : ''}">
     {#each [3, 1, 2] as i (i)}
         {@const sum = sumAt(i)}
-        <div class="sum no-highlight color-{i}" onpointerdown={() => onPointerDown(i)}>
+        <div class="sum no-highlight color-{i}">
             <NumberFlow prefix={sum > 0 ? '+' : ''} value={sum} />
         </div>
     {/each}

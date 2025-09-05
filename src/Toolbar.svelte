@@ -50,7 +50,7 @@
     const onMusic = () => {
         _sound.music = !_sound.music;
 
-        if (ss.cells.length === 0) {
+        if (ss.tiles.length === 0) {
             return;
         }
 

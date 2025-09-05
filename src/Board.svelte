@@ -40,9 +40,10 @@
 
 <div id="board" class="board {ss.surrender ? 'surrender' : ''}" style="width: {BOARD_SIZE}px;">
     <div id="board-content" class="content {ss.flip ? 'flipped' : ''}">
-            {#each SPOTS as spot (spot.id)}
-                <Spot {spot} />
-            {/each}
+        {#each ss.tiles as tile (tile.id)}
+            {@const spot = SPOTS.find((spot) => (spot.id === tile.sid))}
+            <Spot {spot} />
+        {/each}
     </div>
 </div>
 
