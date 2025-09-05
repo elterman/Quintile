@@ -7,9 +7,9 @@
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = "<span style='color: var(--aqua);'>";
-    const gold = "<span style='color: var(--gold);'>";
-    const blue = "<span style='color: var(--blue);'>";
+    const hi = '<span style=\'color: var(--aqua);\'>';
+    const gold = '<span style=\'color: var(--gold);\'>';
+    const blue = '<span style=\'color: var(--blue);\'>';
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -158,6 +158,7 @@
 
     .sub-op {
         font-family: Poppins;
-        font-size: 14px;
+        font-size: 15px;
+        opacity: 0.8;
     }
 </style>
