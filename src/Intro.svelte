@@ -7,9 +7,9 @@
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = '<span style=\'color: var(--aqua);\'>';
-    const gold = '<span style=\'color: var(--gold);\'>';
-    const blue = '<span style=\'color: var(--blue);\'>';
+    const hi = "<span style='color: var(--aqua);'>";
+    const gold = "<span style='color: var(--gold);'>";
+    const blue = "<span style='color: var(--blue);'>";
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -98,8 +98,19 @@
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html CONTENT}
         </div>
-        <div class="buttons">
-            <PromptPanel ops={[{ label: ss.cells ? 'back to game' : 'play', onClick: onPlay }]} />
+        <div class="ops">
+            <div class="op">
+                <PromptPanel ops={[{ label: 'easy', onClick: onPlay }]} />
+                <span class='sub-op'>Only two clusters are rotatable</span>
+            </div>
+            <div class="op">
+                <PromptPanel ops={[{ label: 'still easy', onClick: onPlay }]} />
+                <span class='sub-op'>Only three clusters are rotatable</span>
+            </div>
+            <div class="op">
+                <PromptPanel ops={[{ label: 'not so easy', onClick: onPlay }]} />
+                <span class='sub-op'>All clusters are rotatable</span>
+            </div>
         </div>
     </div>
 {/if}
@@ -110,7 +121,7 @@
         place-self: center;
         grid-area: 1/1;
         display: grid;
-        gap: 50px;
+        gap: 40px;
         justify-items: center;
         font-family: Trajan;
     }
@@ -124,7 +135,7 @@
 
     .content {
         grid-area: 2/1;
-        font-size: 22px;
+        font-size: 20px;
         display: grid;
         align-content: start;
         width: 330px;
@@ -132,9 +143,21 @@
         filter: drop-shadow(2px 2px 3px black);
     }
 
-    .buttons {
+    .ops {
         grid-area: 3/1;
         place-self: center;
-        filter: drop-shadow(3px 3px 5px black);
+        /* filter: drop-shadow(3px 3px 5px black); */
+        display: grid;
+        gap: 10px;
+    }
+
+    .op {
+        display: grid;
+        place-items: center;
+    }
+
+    .sub-op {
+        font-family: Poppins;
+        font-size: 14px;
     }
 </style>
