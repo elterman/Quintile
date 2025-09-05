@@ -15,18 +15,8 @@ export const YOU_GAVE_UP_STATS_RESET = 'you gave up. stats reset.';
 export const SURRENDER_DURATION = '1s';
 export const CYPHER = 'IHGFEDCBA0123456789]';
 export const ZERO_AT = 9;
-
-export const BLOCKS = [
-    { positions: [1, 2, 5], x: 1, y: 0 },
-    { positions: [3, 7, 6], x: 2.5, y: 0 },
-    { positions: [11, 12, 16], x: 3, y: 1.5 },
-    { positions: [15, 19, 18], x: 2, y: 2.25 },
-    { positions: [13, 14, 17], x: 0.5, y: 2.25 },
-    { positions: [4, 9, 8], x: 0, y: 0.75 }
-];
-
+export const BLOCKS = [[2, 8, 9], [3, 10, 11], [4, 12, 13], [5, 14, 15], [6, 16, 7]];
 export const GROUPS = [[2, 3, 4, 5, 6], [7, 9, 11, 13, 15], [8, 10, 12, 14, 16]];
-
 export const TILE_SIDE_DX = 50;
 export const TDX = 1.618;
 export const TDY = 1.5388;

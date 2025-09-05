@@ -2,8 +2,9 @@
     import { BOARD_SIZE, SPOTS } from './const';
     import { isSolved, makePuzzle, onOver, persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
-    import Spot from './Spot.svelte';
+    import Spot from './Tile.svelte';
     import { ss } from './state.svelte';
+    import Tile from './Tile.svelte';
 
     $effect(() => {
         const onTransitionEnd = (e) => {
@@ -41,8 +42,7 @@
 <div id="board" class="board {ss.surrender ? 'surrender' : ''}" style="width: {BOARD_SIZE}px;">
     <div id="board-content" class="content {ss.flip ? 'flipped' : ''}">
         {#each ss.tiles as tile (tile.id)}
-            {@const spot = SPOTS.find((spot) => (spot.id === tile.sid))}
-            <Spot {spot} />
+            <Tile {tile} />
         {/each}
     </div>
 </div>

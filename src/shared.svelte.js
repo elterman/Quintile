@@ -1,5 +1,5 @@
 import { cloneDeep, random, sample } from 'lodash-es';
-import { BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
+import { CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
 import { post, range } from './utils';
@@ -155,53 +155,53 @@ const randomPuzzle = () => {
     // } while ([1, 2, 3, 4, 5].some(i => sumAt(i) === ss.sum));
 };
 
-export const onRotateBlock = (bi, cw,) => {
-    const cis = BLOCKS[bi - 1].positions;
-    const poss = cis.map(i => ss.cells[i - 1].pos);
+// export const onRotateBlock = (bi, cw,) => {
+//     const cis = BLOCKS[bi - 1].positions;
+//     const poss = cis.map(i => ss.cells[i - 1].pos);
 
-    for (let i = 0; i < 3; i++) {
-        let pos = poss[i];
+//     for (let i = 0; i < 3; i++) {
+//         let pos = poss[i];
 
-        if (cw) {
-            pos = i < 2 ? poss[i + 1] : poss[0];
-        } else {
-            pos = i > 0 ? poss[i - 1] : poss[2];
-        }
+//         if (cw) {
+//             pos = i < 2 ? poss[i + 1] : poss[0];
+//         } else {
+//             pos = i > 0 ? poss[i - 1] : poss[2];
+//         }
 
-        const j = cis[i];
-        ss.cells[j - 1].pos = pos;
-    }
-};
+//         const j = cis[i];
+//         ss.cells[j - 1].pos = pos;
+//     }
+// };
 
-export const onRotateGrid = (cw) => {
-    const newPos = (pos) => {
-        switch (pos) {
-            case 1: return cw ? 3 : 8;
-            case 2: return cw ? 7 : 4;
-            case 3: return cw ? 12 : 1;
-            case 4: return cw ? 2 : 13;
-            case 5: return cw ? 6 : 9;
-            case 6: return cw ? 11 : 5;
-            case 7: return cw ? 16 : 2;
-            case 8: return cw ? 1 : 17;
-            case 9: return cw ? 5 : 14;
-            case 11: return cw ? 15 : 6;
-            case 12: return cw ? 19 : 3;
-            case 13: return cw ? 4 : 18;
-            case 14: return cw ? 9 : 15;
-            case 15: return cw ? 14 : 11;
-            case 16: return cw ? 18 : 7;
-            case 17: return cw ? 8 : 19;
-            case 18: return cw ? 13 : 16;
-            case 19: return cw ? 17 : 12;
-            default: return pos;
-        }
-    };
+// export const onRotateGrid = (cw) => {
+//     const newPos = (pos) => {
+//         switch (pos) {
+//             case 1: return cw ? 3 : 8;
+//             case 2: return cw ? 7 : 4;
+//             case 3: return cw ? 12 : 1;
+//             case 4: return cw ? 2 : 13;
+//             case 5: return cw ? 6 : 9;
+//             case 6: return cw ? 11 : 5;
+//             case 7: return cw ? 16 : 2;
+//             case 8: return cw ? 1 : 17;
+//             case 9: return cw ? 5 : 14;
+//             case 11: return cw ? 15 : 6;
+//             case 12: return cw ? 19 : 3;
+//             case 13: return cw ? 4 : 18;
+//             case 14: return cw ? 9 : 15;
+//             case 15: return cw ? 14 : 11;
+//             case 16: return cw ? 18 : 7;
+//             case 17: return cw ? 8 : 19;
+//             case 18: return cw ? 13 : 16;
+//             case 19: return cw ? 17 : 12;
+//             default: return pos;
+//         }
+//     };
 
-    for (let i = 0; i < 19; i++) {
-        ss.cells[i].pos = newPos(ss.cells[i].pos);
-    }
-};
+//     for (let i = 0; i < 19; i++) {
+//         ss.cells[i].pos = newPos(ss.cells[i].pos);
+//     }
+// };
 
 export const makePuzzle = () => {
     const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), turns: cloneDeep(ss.turns) });
