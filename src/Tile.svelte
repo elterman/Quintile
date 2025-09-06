@@ -66,6 +66,7 @@
         place-items: center;
         box-sizing: border-box;
         /* border: 1px solid tan; */
+        transition: transform 1s;
     }
 
     .pentagon {
@@ -77,6 +78,7 @@
         /* background: #ffffff48; */
         display: grid;
         cursor: pointer;
+        transition: background-image 1s, rotate 1s;
     }
 
     .pentagon:hover {

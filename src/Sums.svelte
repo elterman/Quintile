@@ -40,10 +40,5 @@
         font-family: Poppins;
         font-weight: bold;
         color: var(--background);
-        cursor: pointer;
-    }
-
-    .sum:hover {
-        filter: sepia(0.35);
     }
 </style>
