@@ -4,13 +4,41 @@
     import { decode } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
+    import { post } from './utils';
 
     const { tile } = $props();
     const spot = $derived(SPOTS[tile.sid]);
     const center = $derived(tile.sid === 1);
     const width = PENT_SIDE_LENGTH * TDX;
-    const transform = $derived(`translate(${PENT_SIDE_LENGTH * spot.dx}px, ${PENT_SIDE_LENGTH * spot.dy}px)`);
-    const disabled = $derived.by(() => spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
+    const to = $derived(tile.rotate ? `${spot.x}% ${spot.y}%` : '0 0');
+    const deg = $derived(tile.rotate ? spot[tile.rotate] : 0);
+    const transform = $derived(`translate(${PENT_SIDE_LENGTH * spot.dx}px, ${PENT_SIDE_LENGTH * spot.dy}px) rotate(${deg}deg)`);
+    const disabled = $derived(tile.rotate || spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
+    let _this = $state();
+    let duration = $derived(tile.rotate ? '0.5s' : 0);
+
+    $effect(() => {
+        const onTransitionEnd = () => {
+            if (!tile.rotate) {
+                return;
+            }
+
+            const block = BLOCKS.find((b) => b.includes(tile.sid));
+            let i = block.indexOf(tile.sid) + (tile.rotate === 'cw' ? 1 : -1);
+
+            if (i < 0) {
+                i = 2;
+            } else if (i > 2) {
+                i = 0;
+            }
+
+            delete tile.rotate;
+            tile.sid = block[i];
+        };
+
+        _this.addEventListener('transitionend', onTransitionEnd);
+        return () => _this.removeEventListener('transitionend', onTransitionEnd);
+    });
 
     const onPointerDown = () => {
         _prompt.opacity = 0;
@@ -23,17 +51,11 @@
         ss.steps += 1;
 
         const cw = spot.cix === 2;
-
-        const block = [...BLOCKS.find((b) => b.includes(tile.sid))];
+        const block = BLOCKS.find((b) => b.includes(tile.sid));
         const tobs = block.map((sid) => ss.tiles.find((t) => t.sid === sid));
 
-        block.unshift(block[2]);
-        block.push(block[1]);
-
         for (let i = 0; i < 3; i++) {
-            const tob = tobs[i];
-            const j = cw ? i + 2 : i;
-            tob.sid = block[j];
+            tobs[i].rotate = cw ? 'cw' : 'ccw';
         }
     };
 
@@ -42,16 +64,15 @@
     );
 </script>
 
-<div id={`tile-${tile.sid}`} class="tile no-highlight" style="transform: {transform};">
+<div id={`tile-${tile.sid}`} bind:this={_this} class="tile no-highlight" style="transform: {transform}; transform-origin: {to}; transition: transform {duration} linear;">
     <div class={pclass} style="width: {width}px;" onpointerdown={onPointerDown}></div>
     {#if ss.tiles}
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}
-        {@const transform = `translateY(${spot.flip ? -10 : center ? 12 : 15}%);`}
+        {@const transform = `translateY(${spot.flip ? -10 : center ? 12 : 15}%) rotate(${-deg}deg);`}
         <!-- {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'} -->
-        {@const duration = '0s'}
         {@const _class = `char ${center ? (ss.over ? 'center' : 'gold') : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
-        <div class={_class} style="transform: {transform}; transition-duration: {duration};" transition:fade>
+        <div class={_class} style="transform: {transform}; transition: transform {duration} linear;">
             {plus + num}
         </div>
     {/if}
@@ -66,7 +87,6 @@
         place-items: center;
         box-sizing: border-box;
         /* border: 1px solid tan; */
-        transition: transform 1s;
     }
 
     .pentagon {
@@ -78,7 +98,7 @@
         /* background: #ffffff48; */
         display: grid;
         cursor: pointer;
-        transition: background-image 1s, rotate 1s;
+        transition: background-image 0.3s linear;
     }
 
     .pentagon:hover {
@@ -120,7 +140,6 @@
         font-size: 22px;
         font-weight: bold;
         pointer-events: none;
-        transition: transform 0.5s linear;
         color: black;
     }
 

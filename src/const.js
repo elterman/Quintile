@@ -30,7 +30,7 @@ export const BOARD_SIZE = PENT_SIDE_LENGTH * (TDY * 5 - ROOF * 2);
 export const SPOTS = {
     1: { dx: 0, dy: 0, cix: 0 },
     2: { flip: true, dx: TDX * 0.5, dy: -FLOOR, cix: 1, x: 80.9, y: 0, cw: 108, ccw: -108 },
-    3: { flip: true, dx: TDX - OVERHANG, dy: ROOF, cix: 1, x: 100, y: 80.9, cw: 108, ccw: -108 },
+    3: { flip: true, dx: TDX - OVERHANG, dy: ROOF, cix: 1, x: 100, y: 61.8, cw: 108, ccw: -108 },
     4: { flip: true, dx: 0, dy: TDY, cix: 1, x: 50, y: 100, cw: 108, ccw: -108 },
     5: { flip: true, dx: - (1 + OVERHANG), dy: ROOF, cix: 1, x: 0, y: 61.8, cw: 108, ccw: -108 },
     6: { flip: true, dx: -TDX * 0.5, dy: -FLOOR, cix: 1, x: 19.1, y: 0, cw: 108, ccw: -108 },
