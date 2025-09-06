@@ -1,8 +1,7 @@
 <script>
     import { fade } from 'svelte/transition';
     import { BOARD_SIZE, FLOOR, OVERHANG, PGON_SIDE, TDX, TDY } from './const';
-    import { isSolved, makePuzzle, onOver, persist } from './shared.svelte';
-    import { _sound } from './sound.svelte';
+    import { makePuzzle } from './shared.svelte';
     import { ss } from './state.svelte';
     import Tile from './Tile.svelte';
 
@@ -10,7 +9,7 @@
         const onTransitionEnd = (e) => {
             const id = e.target.id;
 
-            if (id !== 'board' && id !== 'board-content') {
+            if (id !== 'board-content') {
                 return false;
             }
 
@@ -21,17 +20,7 @@
             if (id === 'board-content' && ss.flip) {
                 delete ss.flip;
                 makePuzzle();
-            } else if (id === 'board' && (ss.twist === 'cw' || ss.twist === 'acw')) {
-                _sound.play('cluck');
-                delete ss.twist;
             }
-
-            if (isSolved()) {
-                _sound.play('won', { rate: 4 });
-                onOver();
-            }
-
-            persist();
         };
 
         window.addEventListener('transitionend', onTransitionEnd);
@@ -91,9 +80,5 @@
         border-radius: 50%;
         background-size: cover;
         background: linear-gradient(135deg, pink, brown);
-    }
-
-    .hidden {
-        opacity: 0;
     }
 </style>
