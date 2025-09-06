@@ -92,15 +92,15 @@
         <div class="ops">
             <div class="op">
                 <PromptPanel ops={[{ label: 'easy', onClick: () => onPlay(1) }]} />
-                <span class="sub-op">Only two clusters are rotatable</span>
+                <span class="sub-op">2 of 5 clusters are rotatable</span>
             </div>
             <div class="op">
-                <PromptPanel ops={[{ label: 'still easy', onClick: () => onPlay(2) }]} />
-                <span class="sub-op">Only three clusters are rotatable</span>
+                <PromptPanel ops={[{ label: 'no so easy', onClick: () => onPlay(2) }]} />
+                <span class="sub-op">3 of 5 clusters are rotatable</span>
             </div>
             <div class="op">
-                <PromptPanel ops={[{ label: 'not so easy', onClick: () => onPlay(3) }]} />
-                <span class="sub-op">All clusters are rotatable</span>
+                <PromptPanel ops={[{ label: 'not easy', onClick: () => onPlay(3) }]} />
+                <span class="sub-op">4 of 5 clusters are rotatable</span>
             </div>
         </div>
     </div>

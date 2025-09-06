@@ -336,7 +336,8 @@ export const calcSolutionTurns = (turns) => {
 };
 
 const charAt = (id) => {
-    return ss.tiles?.find(tile => tile.id === id).ch;
+    const tile = ss.tiles?.find(tile => tile.sid === id);
+    return tile?.ch || 0;
 };
 
-const wordAt = (poss) => poss.reduce((word, pos) => word + charAt(pos), '');
+const wordAt = (ids) => ids.reduce((word, id) => word + charAt(id), '');

@@ -32,8 +32,9 @@
                 i = 0;
             }
 
-            delete tile.rotate;
-            tile.sid = block[i];
+            const tob = ss.tiles.find(t => t.id === tile.id);
+            delete tob.rotate;
+            tob.sid = block[i];
         };
 
         _this.addEventListener('transitionend', onTransitionEnd);
@@ -64,12 +65,16 @@
     );
 </script>
 
-<div id={`tile-${tile.sid}`} bind:this={_this} class="tile no-highlight" style="transform: {transform}; transform-origin: {to}; transition: transform {duration} linear;">
+<div
+    id={`tile-${tile.sid}`}
+    bind:this={_this}
+    class="tile no-highlight"
+    style="transform: {transform}; transform-origin: {to}; transition: transform {duration} linear;">
     <div class={pclass} style="width: {width}px;" onpointerdown={onPointerDown}></div>
     {#if ss.tiles}
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}
-        {@const transform = `translateY(${spot.flip ? -10 : center ? 25 : 15}%) rotate(${-deg}deg);`}
+        {@const transform = `translateY(${spot.flip ? -10 : center ? 23 : 15}%) rotate(${-deg}deg);`}
         <!-- {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'} -->
         {@const _class = `char ${center ? 'gold' : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
         <div class={_class} style="transform: {transform}; transition: transform {duration} linear;">
