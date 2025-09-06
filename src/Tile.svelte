@@ -6,8 +6,8 @@
     import { _prompt, ss } from './state.svelte';
 
     const { tile } = $props();
-    const spot = $derived(SPOTS.find((spot) => spot.id === tile.sid));
-    const center = $derived(spot.id === 1);
+    const spot = $derived(SPOTS[tile.sid]);
+    const center = $derived(tile.sid === 1);
     const width = PENT_SIDE_LENGTH * TDX;
     const transform = $derived(`translate(${PENT_SIDE_LENGTH * spot.dx}px, ${PENT_SIDE_LENGTH * spot.dy}px)`);
     const disabled = $derived.by(() => spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
@@ -24,7 +24,7 @@
 
         const cw = spot.cix === 2;
 
-        const block = [...BLOCKS.find((b) => b.includes(spot.id))];
+        const block = [...BLOCKS.find((b) => b.includes(tile.sid))];
         const tobs = block.map((sid) => ss.tiles.find((t) => t.sid === sid));
 
         block.unshift(block[2]);
@@ -42,7 +42,7 @@
     );
 </script>
 
-<div id={`tile-${spot.id}`} class="tile no-highlight" style="transform: {transform};">
+<div id={`tile-${tile.sid}`} class="tile no-highlight" style="transform: {transform};">
     <div class={pclass} style="width: {width}px;" onpointerdown={onPointerDown}></div>
     {#if ss.tiles}
         {@const num = decode(tile.ch)}
