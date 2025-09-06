@@ -7,8 +7,8 @@ import { findBlock, post, range } from './utils';
 let over = $state(false);
 
 export const initPoss = () => {
-    for (let i = 0; i < ss.tiles.length; i++) {
-        ss.tiles[i].id = i + 1;
+    for (const tile of ss.tiles) {
+        tile.sid = tile.id;
     }
 };
 
@@ -139,6 +139,8 @@ const randomPuzzle = () => {
     makeTiles();
 
     do {
+        initPoss();
+
         for (let i = 0; i < 5; i++) {
             const block = BLOCKS[i];
             const count = random(0, 2);
