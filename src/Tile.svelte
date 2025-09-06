@@ -1,5 +1,5 @@
 <script>
-    import { BLOCKS, PENT_SIDE_LENGTH, SPOTS, TDX } from './const';
+    import { PENT_SIDE_LENGTH, SPOTS, TDX } from './const';
     import { decode, rotateTile } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';

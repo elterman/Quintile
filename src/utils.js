@@ -1,4 +1,4 @@
-import { BLOCKS } from "./const";
+import { BLOCKS } from './const';
 
 export const windowSize = () => {
     const d = document,
