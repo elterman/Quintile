@@ -60,7 +60,7 @@
     };
 
     const pclass = $derived(
-        `pentagon ${spot.flip ? 'flip' : ''} ${center && ss.over ? 'over' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over ? 'pulse' : ''}`,
+        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over ? 'pulse' : ''}`,
     );
 </script>
 
@@ -69,9 +69,9 @@
     {#if ss.tiles}
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}
-        {@const transform = `translateY(${spot.flip ? -10 : center ? 12 : 15}%) rotate(${-deg}deg);`}
+        {@const transform = `translateY(${spot.flip ? -10 : center ? 25 : 15}%) rotate(${-deg}deg);`}
         <!-- {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'} -->
-        {@const _class = `char ${center ? (ss.over ? 'center' : 'gold') : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
+        {@const _class = `char ${center ? 'gold' : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
         <div class={_class} style="transform: {transform}; transition: transform {duration} linear;">
             {plus + num}
         </div>
@@ -114,11 +114,6 @@
         pointer-events: none;
     }
 
-    .over {
-        background-image: url('$lib/images/Aqua Radial.webp');
-        background-size: cover;
-    }
-
     .pulse {
         animation: pulse 0.2s alternate 6 ease-in-out;
     }
@@ -153,6 +148,7 @@
 
     .center,
     .gold {
+        font-family: Trajan;
         font-size: 32px;
     }
 
