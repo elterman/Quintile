@@ -107,11 +107,10 @@
     }
 
     .pentagon:hover {
-        filter: contrast(1.15) brightness(1.15);
+        filter: contrast(1.1) brightness(1.1);
     }
 
     .flip {
-        /* clip-path: polygon(50% 100%, 100% 62%, 82% 0%, 18% 0%, 0% 62%); */
         rotate: 180deg;
     }
 

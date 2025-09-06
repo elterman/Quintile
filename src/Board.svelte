@@ -1,8 +1,7 @@
 <script>
-    import { BOARD_SIZE, SPOTS } from './const';
+    import { BOARD_SIZE, FLOOR, OVERHANG, PENT_SIDE_LENGTH, TDX, TDY } from './const';
     import { isSolved, makePuzzle, onOver, persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
-    import Spot from './Tile.svelte';
     import { ss } from './state.svelte';
     import Tile from './Tile.svelte';
 
@@ -45,6 +44,11 @@
             <Tile {tile} />
         {/each}
     </div>
+    <div class="dot" style="transform: translate({(TDX - OVERHANG) * PENT_SIDE_LENGTH}px, calc({TDY * PENT_SIDE_LENGTH}px - 50%));"></div>
+    <!-- <div class="dot" style="transform: translate({-(TDX - OVERHANG) * PENT_SIDE_LENGTH}px, calc({TDY * PENT_SIDE_LENGTH}px - 50%));"></div> -->
+    <!-- <div class="dot" style="transform: translate({(TDX + 0.5) * PENT_SIDE_LENGTH}px, calc({(2 * TDY + FLOOR) * PENT_SIDE_LENGTH}px - 50%));"></div> -->
+    <div class="dot" style="transform: translate(0, calc({(3 * TDY + FLOOR) * PENT_SIDE_LENGTH}px - 50%));"></div>
+    <div class="dot" style="transform: translate(-{(TDX + 0.5) * PENT_SIDE_LENGTH}px, calc({(2 * TDY + FLOOR) * PENT_SIDE_LENGTH}px - 50%));"></div>
 </div>
 
 <style>
@@ -69,5 +73,16 @@
 
     .surrender {
         transition-delay: 0.5s;
+    }
+
+    .dot {
+        grid-area: 1/1;
+        place-self: start center;
+        display: grid;
+        width: 12px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-size: cover;
+        background: linear-gradient(135deg, pink, brown);
     }
 </style>
