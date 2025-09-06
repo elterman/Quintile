@@ -1,5 +1,6 @@
 <script>
-    import { BOARD_SIZE, FLOOR, OVERHANG, PENT_SIDE_LENGTH, TDX, TDY } from './const';
+    import { fade } from 'svelte/transition';
+    import { BOARD_SIZE, FLOOR, OVERHANG, PGON_SIDE, TDX, TDY } from './const';
     import { isSolved, makePuzzle, onOver, persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { ss } from './state.svelte';
@@ -45,7 +46,10 @@
         {/each}
     </div>
     {#snippet dot(dx, dy)}
-        <div class="dot" style="transform: translate({dx * PENT_SIDE_LENGTH}px, calc({dy * PENT_SIDE_LENGTH}px - 50%));"></div>
+        {#if !ss.flip}
+            <div class="dot" style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));" in:fade={{ delay: 500 }}>
+            </div>
+        {/if}
     {/snippet}
     {@render dot(TDX - OVERHANG, TDY)}
     {@render dot(OVERHANG - TDX, TDY)}
@@ -87,5 +91,9 @@
         border-radius: 50%;
         background-size: cover;
         background: linear-gradient(135deg, pink, brown);
+    }
+
+    .hidden {
+        opacity: 0;
     }
 </style>

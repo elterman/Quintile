@@ -301,11 +301,11 @@ export const persist = (statsOnly = false) => {
 export const log = (value) => console.log($state.snapshot(value));
 
 export const isSolved = () => {
-    if (!ss.cells) {
+    if (!ss.tiles) {
         return false;
     }
 
-    return [1, 2, 3, 4, 5].every(i => sumAt(i) === ss.sum);
+    return [1, 2, 3].every(i => sumAt(i) === ss.sum);
 };
 
 export const sumAt = i => {

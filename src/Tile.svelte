@@ -1,6 +1,6 @@
 <script>
-    import { PENT_SIDE_LENGTH, SPOTS, TDX } from './const';
-    import { decode, rotateTile } from './shared.svelte';
+    import { PGON_SIDE, SPOTS, TDX } from './const';
+    import { decode, isSolved, onOver, rotateTile } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
     import { findBlock } from './utils';
@@ -8,10 +8,10 @@
     const { tile } = $props();
     const spot = $derived(SPOTS[tile.sid]);
     const center = $derived(tile.sid === 1);
-    const width = PENT_SIDE_LENGTH * TDX;
+    const width = PGON_SIDE * TDX;
     const to = $derived(tile.rotate ? `${spot.x}% ${spot.y}%` : '0 0');
     const deg = $derived(tile.rotate ? spot[tile.rotate] : 0);
-    const transform = $derived(`translate(${PENT_SIDE_LENGTH * spot.dx}px, ${PENT_SIDE_LENGTH * spot.dy}px) rotate(${deg}deg)`);
+    const transform = $derived(`translate(${PGON_SIDE * spot.dx}px, ${PGON_SIDE * spot.dy}px) rotate(${deg}deg)`);
     const disabled = $derived(tile.rotate || spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
     let _this = $state();
     let duration = $derived(tile.rotate ? '0.5s' : 0);
@@ -23,7 +23,12 @@
             }
 
             rotateTile(tile, tile.rotate === 'cw');
-        };
+
+            if (isSolved()) {
+                _sound.play('won', { rate: 4 });
+                onOver();
+            }
+     };
 
         _this.addEventListener('transitionend', onTransitionEnd);
         return () => _this.removeEventListener('transitionend', onTransitionEnd);

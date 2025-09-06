@@ -15,17 +15,15 @@ export const YOU_GAVE_UP_STATS_RESET = 'you gave up. stats reset.';
 export const SURRENDER_DURATION = '1s';
 export const CYPHER = 'IHGFEDCBA0123456789]';
 export const ZERO_AT = 9;
-export const BLOCKS = [[2, 8, 9], [3, 10, 11], [4, 12, 13], [5, 14, 15], [6, 16, 7]];
-export const GROUPS = [[2, 3, 4, 5, 6], [7, 9, 11, 13, 15], [8, 10, 12, 14, 16]];
-export const PENT_SIDE_LENGTH = 50;
+export const PGON_SIDE = 50;
 export const TDX = 1.618;
 export const TDY = 1.5388;
 export const ROOF = 0.5878;
-export const FLOOR = TDY - ROOF;
+export const FLOOR = 0.951; // TDY - ROOF
 export const OVERHANG = 0.309;
-const TRAD = 0.6882;
-export const TCY = TDY - TRAD;
-export const BOARD_SIZE = PENT_SIDE_LENGTH * (TDY * 5 - ROOF * 2);
+export const BOARD_SIZE = PGON_SIDE * (TDY * 5 - ROOF * 2);
+export const BLOCKS = [[2, 8, 9], [3, 10, 11], [4, 12, 13], [5, 14, 15], [6, 16, 7]];
+export const GROUPS = [[2, 3, 4, 5, 6], [7, 9, 11, 13, 15], [8, 10, 12, 14, 16]];
 
 export const SPOTS = {
     1: { dx: 0, dy: 0, cix: 0 },
