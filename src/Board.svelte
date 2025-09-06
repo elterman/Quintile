@@ -44,11 +44,14 @@
             <Tile {tile} />
         {/each}
     </div>
-    <div class="dot" style="transform: translate({(TDX - OVERHANG) * PENT_SIDE_LENGTH}px, calc({TDY * PENT_SIDE_LENGTH}px - 50%));"></div>
-    <!-- <div class="dot" style="transform: translate({-(TDX - OVERHANG) * PENT_SIDE_LENGTH}px, calc({TDY * PENT_SIDE_LENGTH}px - 50%));"></div> -->
-    <!-- <div class="dot" style="transform: translate({(TDX + 0.5) * PENT_SIDE_LENGTH}px, calc({(2 * TDY + FLOOR) * PENT_SIDE_LENGTH}px - 50%));"></div> -->
-    <div class="dot" style="transform: translate(0, calc({(3 * TDY + FLOOR) * PENT_SIDE_LENGTH}px - 50%));"></div>
-    <div class="dot" style="transform: translate(-{(TDX + 0.5) * PENT_SIDE_LENGTH}px, calc({(2 * TDY + FLOOR) * PENT_SIDE_LENGTH}px - 50%));"></div>
+    {#snippet dot(dx, dy)}
+        <div class="dot" style="transform: translate({dx * PENT_SIDE_LENGTH}px, calc({dy * PENT_SIDE_LENGTH}px - 50%));"></div>
+    {/snippet}
+    {@render dot(TDX - OVERHANG, TDY)}
+    {@render dot(OVERHANG - TDX, TDY)}
+    {@render dot(TDX + 0.5, 2 * TDY + FLOOR)}
+    {@render dot(0, 3 * TDY + FLOOR)}
+    {@render dot(-(TDX + 0.5), 2 * TDY + FLOOR)}
 </div>
 
 <style>
