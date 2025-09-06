@@ -1,8 +1,9 @@
 <script>
     import { BLOCKS, PENT_SIDE_LENGTH, SPOTS, TDX } from './const';
-    import { decode } from './shared.svelte';
+    import { decode, rotateTile } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
+    import { findBlock } from './utils';
 
     const { tile } = $props();
     const spot = $derived(SPOTS[tile.sid]);
@@ -21,18 +22,7 @@
                 return;
             }
 
-            const block = BLOCKS.find((b) => b.includes(tile.sid));
-            let i = block.indexOf(tile.sid) + (tile.rotate === 'cw' ? 1 : -1);
-
-            if (i < 0) {
-                i = 2;
-            } else if (i > 2) {
-                i = 0;
-            }
-
-            const tob = ss.tiles.find(t => t.id === tile.id);
-            delete tob.rotate;
-            tob.sid = block[i];
+            rotateTile(tile, tile.rotate === 'cw');
         };
 
         _this.addEventListener('transitionend', onTransitionEnd);
@@ -50,7 +40,7 @@
         ss.steps += 1;
 
         const cw = spot.cix === 2;
-        const block = BLOCKS.find((b) => b.includes(tile.sid));
+        const block = findBlock(tile.sid);
         const tobs = block.map((sid) => ss.tiles.find((t) => t.sid === sid));
 
         for (let i = 0; i < 3; i++) {

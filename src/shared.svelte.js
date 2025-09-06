@@ -1,8 +1,8 @@
 import { cloneDeep, random, sample } from 'lodash-es';
-import { CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
+import { BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
-import { post, range } from './utils';
+import { findBlock, post, range } from './utils';
 
 let over = $state(false);
 
@@ -138,6 +138,21 @@ const randomPuzzle = () => {
 
     makeTiles();
 
+    do {
+        for (let i = 0; i < 5; i++) {
+            const block = BLOCKS[i];
+            const count = random(0, 2);
+
+            for (const id of block) {
+                const tile = ss.tiles.find(t => t.id === id);
+
+                for (let j = 0; j < count; j++) {
+                    rotateTile(tile, true);
+                }
+            }
+        }
+    } while ([1, 2, 3].some(i => sumAt(i) === ss.sum));
+
     // do {
     //     ss.turns = [random(0, 5), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2)];
 
@@ -202,6 +217,21 @@ const randomPuzzle = () => {
 //         ss.cells[i].pos = newPos(ss.cells[i].pos);
 //     }
 // };
+
+export const rotateTile = (tile, cw) => {
+    const block = findBlock(tile.sid);
+    let i = block.indexOf(tile.sid) + (cw ? 1 : -1);
+
+    if (i < 0) {
+        i = 2;
+    } else if (i > 2) {
+        i = 0;
+    }
+
+    const tob = ss.tiles.find(t => t.id === tile.id);
+    delete tob.rotate;
+    tob.sid = block[i];
+};
 
 export const makePuzzle = () => {
     const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), turns: cloneDeep(ss.turns) });
