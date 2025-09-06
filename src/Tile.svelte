@@ -1,10 +1,8 @@
 <script>
-    import { fade } from 'svelte/transition';
     import { BLOCKS, PENT_SIDE_LENGTH, SPOTS, TDX } from './const';
     import { decode } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
-    import { post } from './utils';
 
     const { tile } = $props();
     const spot = $derived(SPOTS[tile.sid]);

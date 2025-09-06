@@ -95,7 +95,7 @@
                 <span class="sub-op">2 of 5 clusters are rotatable</span>
             </div>
             <div class="op">
-                <PromptPanel ops={[{ label: 'no so easy', onClick: () => onPlay(2) }]} />
+                <PromptPanel ops={[{ label: 'not so easy', onClick: () => onPlay(2) }]} />
                 <span class="sub-op">3 of 5 clusters are rotatable</span>
             </div>
             <div class="op">
