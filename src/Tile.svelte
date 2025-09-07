@@ -3,7 +3,7 @@
     import { decode, isSolved, onOver, rotateTile } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
-    import { findBlock } from './utils';
+    import { findBlock, post } from './utils';
 
     const { tile } = $props();
     const spot = $derived(SPOTS[tile.sid]);
@@ -12,7 +12,7 @@
     const to = $derived(tile.rotate ? `${spot.x}% ${spot.y}%` : '0 0');
     const deg = $derived(tile.rotate ? spot[tile.rotate] : 0);
     const transform = $derived(`translate(${PGON_SIDE * spot.dx}px, ${PGON_SIDE * spot.dy}px) rotate(${deg}deg)`);
-    const disabled = $derived(tile.rotate || spot.cix < 2 || ss.twist || ss.over || ss.cheer || ss.surrender || ss.flip);
+    const disabled = $derived(ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.flip);
     let _this = $state();
     let duration = $derived(tile.rotate ? '0.5s' : 0);
 
@@ -23,6 +23,8 @@
             }
 
             rotateTile(tile, tile.rotate === 'cw');
+
+            post(() => delete ss.rotating, 400);
 
             if (isSolved()) {
                 _sound.play('won', { rate: 4 });
@@ -40,6 +42,8 @@
         if (spot.cix < 2) {
             return;
         }
+
+        ss.rotating = true;
 
         _sound.play('click');
         ss.steps += 1;
