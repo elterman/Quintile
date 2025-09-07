@@ -10,7 +10,7 @@
     import { persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, _stats, ss } from './state.svelte';
-    import ToolButton from './Tool Button.svelte';
+    import TextButton from './Text Button.svelte';
 
     const onHelp = () => {
         ss.intro = true;
@@ -64,11 +64,11 @@
 </script>
 
 <div class="toolbar">
-    <ToolButton id="tb-help" src={Question} onClick={onHelp} />
-    <ToolButton id="tb-surrender" src={Surrender} onClick={onSurrender} disabled={ss.over || ss.surrender} />
-    <ToolButton id="tb-reset-stats" src={ResetStats} onClick={onResetStats} disabled={_stats.plays === 0} />
-    <ToolButton id="tb-sound" src={_sound.sfx ? SoundOn : SoundOff} onClick={onSound} />
-    <ToolButton id="tb-music" src={_sound.music ? MusicOn : MusicOff} onClick={onMusic} />
+    <TextButton id="tb-help" text={['BACK']} onClick={onHelp} />
+    <TextButton id="tb-surrender" text={['GIVE', 'UP']} onClick={onSurrender} disabled={ss.over || ss.surrender} />
+    <TextButton id="tb-reset-stats" text={['RESET', 'STATS']} onClick={onResetStats} disabled={_stats.plays === 0} />
+    <TextButton id="tb-sound" text={['SOUND', _sound.sfx ? 'ON' : 'OFF']} onClick={onSound} />
+    <TextButton id="tb-music" text={['MUSIC', _sound.music ? 'ON' : 'OFF']} onClick={onMusic} />
 </div>
 
 <style>

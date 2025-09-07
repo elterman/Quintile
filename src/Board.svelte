@@ -78,7 +78,7 @@
         aspect-ratio: 1;
         border-radius: 50%;
         background-size: cover;
-        background: linear-gradient(135deg, pink, brown);
+        background: linear-gradient(135deg, pink, #ff4500);
         box-sizing: border-box;
         border: 2px solid #00000080;
         transition: opacity 0.3s linear;

@@ -2,12 +2,12 @@
     import { ss } from './state.svelte';
     import { post } from './utils';
 
-    const { id, src, width = 44, disabled, onClick } = $props();
+    const { id, text, width = 48, disabled, onClick } = $props();
 
     let scale = $state(1);
     let timer = $state(false);
 
-    const classes = $derived(['button-base no-highlight button background-silver', { disabled }]);
+    const classes = $derived(['button-base no-highlight button', { disabled }]);
     const style = $derived(`width: ${width}px; height: ${width}px; transform: scale(${scale})`);
 
     $effect(() => {
@@ -48,7 +48,10 @@
 </script>
 
 <div {id} class={classes} onpointerdown={onPointerDown} {style}>
-    <img class="img" {src} alt="" {width} />
+    <!-- <img class="img" {src} alt="" {width} /> -->
+    {#each text as line, i (i)}
+        <div>{line}</div>
+    {/each}
 </div>
 
 <style>
@@ -56,18 +59,22 @@
         place-self: center;
         display: grid;
         place-items: center;
-        border-radius: 25%;
+        border-radius: 50%;
         transition: transform 0.1s;
+        font-family: Roboto Condensed;
+        font-size: 15px;
+        color: var(--bronze);
+        background-size: cover;
     }
 
     .button:hover {
-        filter: sepia(0.35);
+        filter: contrast(1.5) brightness(1.5);
     }
 
     .disabled {
         cursor: initial;
         pointer-events: none;
-        background: #80808080;
+        color: #80808080;
     }
 
     .button:focus {
