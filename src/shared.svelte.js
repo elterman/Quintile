@@ -6,6 +6,8 @@ import { findBlock, post, range } from './utils';
 
 let over = $state(false);
 
+export const log = (value) => console.log($state.snapshot(value));
+
 export const initPoss = () => {
     for (const tile of ss.tiles) {
         tile.sid = tile.id;
@@ -169,6 +171,21 @@ export const rotateTile = (tile, cw) => {
     tob.sid = block[i];
 };
 
+const calculatePar = () => {
+    let par = 0;
+
+    for (const b of BLOCKS) {
+        const id = b[0];
+        const tile = ss.tiles.find(tile => tile.id === id);
+
+        if (tile.id !== tile.sid) {
+            par += 1;
+        }
+    }
+
+    ss.par = par;
+};
+
 export const makePuzzle = () => {
     if (ss.replay) {
         const { sum, tiles, rotoBlocks } = ss.initial;
@@ -233,14 +250,21 @@ export const persist = () => {
     localStorage.setItem(ss.appKey(), JSON.stringify(json));
 };
 
-export const log = (value) => console.log($state.snapshot(value));
-
 export const isSolved = () => {
     if (!ss.tiles) {
         return false;
     }
 
     return [1, 2, 3].every(i => sumAt(i) === ss.sum);
+};
+
+const wordAt = (ids) => {
+    const charAt = (id) => {
+        const tile = ss.tiles?.find(tile => tile.sid === id);
+        return tile?.ch || 0;
+    };
+
+    return ids.reduce((word, id) => word + charAt(id), '');
 };
 
 export const sumAt = i => {
@@ -250,24 +274,3 @@ export const sumAt = i => {
     return groupSum(group);
 };
 
-export const calculatePar = () => {
-    let par = 0;
-
-    for (const b of BLOCKS) {
-        const id = b[0];
-        const tile = ss.tiles.find(tile => tile.id === id);
-
-        if (tile.id !== tile.sid) {
-            par += 1;
-        }
-    }
-
-    ss.par = par;
-};
-
-const charAt = (id) => {
-    const tile = ss.tiles?.find(tile => tile.sid === id);
-    return tile?.ch || 0;
-};
-
-const wordAt = (ids) => ids.reduce((word, id) => word + charAt(id), '');

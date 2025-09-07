@@ -64,9 +64,7 @@
         <Splash />
     {:else}
         <div class="content" style="scale: {scale};">
-            {#if wsz > 600}
-                <div class="frame"></div>
-            {/if}
+            <div class="frame {wsz > 600 ? '' : 'hidden'}"></div>
             <GamePage />
             <Intro />
             {#if !ss.intro}
@@ -225,11 +223,15 @@
         background: #00000050;
     }
 
+    .hidden {
+        opacity: 0;
+    }
+
     .disclaimer {
         grid-area: 1/1;
         place-self: end center;
-        font-family: Trajan;
-        font-size: 10px;
+        font-family: Roboto;
+        font-size: 11px;
         transform: translateY(-15px);
         display: grid;
         justify-items: center;

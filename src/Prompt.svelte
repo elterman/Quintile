@@ -1,8 +1,18 @@
 <script>
-    import { PROMPT_NO, PROMPT_PLAY_AGAIN, PROMPT_RESET_STATS, PROMPT_SURRENDER, YOU_GAVE_UP, YOU_GAVE_UP_STATS_RESET } from './const';
+    import {
+        BLOCKS,
+        PROMPT_NO,
+        PROMPT_PLAY_AGAIN,
+        PROMPT_RESET_STATS,
+        PROMPT_SURRENDER,
+        YOU_GAVE_UP,
+        YOU_GAVE_UP_STATS_RESET,
+    } from './const';
     import PromptPanel from './Prompt Panel.svelte';
     import { isSolved, onOver, onResetStats, onStart } from './shared.svelte';
+    import { _sound } from './sound.svelte';
     import { _prompt, _stats, ss } from './state.svelte';
+    import { post } from './utils';
 
     const label = $derived(_prompt.id);
     const cheer = $derived(label.endsWith('!'));
@@ -13,8 +23,27 @@
         if (isSolved()) {
             onOver();
         } else {
-            // TODO
-            // initPoss();
+            let delay = 0;
+
+            for (const block of BLOCKS) {
+                const id = block[0];
+                const tile = ss.tiles.find((tile) => tile.id === id);
+
+                if (tile.id !== tile.sid) {
+                    const cw = tile.sid === block[2];
+                    const tobs = block.map((sid) => ss.tiles.find((t) => t.sid === sid));
+
+                    post(() => {
+                        _sound.play('click');
+
+                        for (let i = 0; i < 3; i++) {
+                            tobs[i].rotate = cw ? 'cw' : 'ccw';
+                        }
+                    }, delay);
+
+                    delay += 1000;
+                }
+            }
         }
 
         if (!ss.replay) {

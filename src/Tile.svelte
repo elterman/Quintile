@@ -13,7 +13,7 @@
     const deg = $derived(tile.rotate ? spot[tile.rotate] : 0);
     const transform = $derived(`translate(${PGON_SIDE * spot.dx}px, ${PGON_SIDE * spot.dy}px) rotate(${deg}deg)`);
     let _this = $state();
-    let duration = $derived(tile.rotate ? '0.5s' : 0);
+    let duration = $derived(tile.rotate ? (ss.surrender ? '1s' : '0.5s') : 0);
 
     const disabled = $derived.by(() => {
         if (ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.flip) {
@@ -94,7 +94,7 @@
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}
         {@const transform = `translateY(${spot.flip ? -10 : center ? 23 : 15}%) rotate(${-deg}deg);`}
-        {@const _class = `char ${center ? 'gold' : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
+        {@const _class = `char ${center ? 'gold' : ''} ${plus || num === 0 || center ? '' : 'negative'}`}
         <div class={_class} style="transform: {transform}; transition: transform {duration} linear;">
             {plus + num}
         </div>
