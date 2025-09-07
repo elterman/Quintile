@@ -4,7 +4,6 @@ export const ss = $state({
     mode: 1,
     intro: true,
     steps: 0,
-    // turns: [0, 0, 0, 0, 0, 0, 0],
     score: () => ss.steps - ss.par,
     appKey: () => `${APP_STATE} • ${ss.mode}`,
 });

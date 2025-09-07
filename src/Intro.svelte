@@ -7,9 +7,9 @@
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = '<span style=\'color: var(--aqua);\'>';
-    const gold = '<span style=\'color: var(--gold);\'>';
-    const blue = '<span style=\'color: var(--blue);\'>';
+    const hi = "<span style='color: var(--aqua);'>";
+    const gold = "<span style='color: var(--gold);'>";
+    const blue = "<span style='color: var(--blue);'>";
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -23,7 +23,8 @@
 
     const reloadGame = (job) => {
         ss.sum = job.sum;
-        ss.cells = job.cells;
+        ss.tiles = job.tiles;
+        ss.rotoBlocks = job.rotoBlocks;
         ss.turns = job.turns;
         ss.initial = job.initial;
         ss.steps = job.steps;
@@ -73,6 +74,12 @@
     };
 
     const onPlay = (mode) => {
+        if (mode !== ss.mode) {
+            delete ss.tiles;
+            delete ss.rotoBlocks;
+            delete ss.sum;
+        }
+
         ss.mode = mode;
 
         loadGame();
@@ -89,7 +96,7 @@
         </div>
         <div class="ops">
             <div class="op">
-                <PromptPanel ops={[{ label: 'somewhat easy', onClick: () => onPlay(1) }]} />
+                <PromptPanel ops={[{ label: 'easy', onClick: () => onPlay(1) }]} />
                 <span class="sub-op">2 of 5 clusters are rotatable</span>
             </div>
             <div class="op">
