@@ -23,7 +23,6 @@
         }
 
         _sound.play('plop');
-
         _prompt.set(PROMPT_SURRENDER);
     };
 
