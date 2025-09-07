@@ -74,7 +74,7 @@
 
 <style>
     .toolbar {
-        grid-area: 5/1;
+        grid-area: 6/1;
         place-self: center;
         display: grid;
         grid-auto-flow: column;

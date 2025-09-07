@@ -1,4 +1,4 @@
-import { cloneDeep, random, sample } from 'lodash-es';
+import { cloneDeep, random, sample, sampleSize } from 'lodash-es';
 import { BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
@@ -105,44 +105,44 @@ const randomPuzzle = () => {
         return group;
     };
 
-    const makeTiles = () => {
-        const gr1 = makeGroup();
-        const gr2 = makeGroup();
-        const gr3 = makeGroup();
+    // make tiles
 
-        const words = [];
+    const gr1 = makeGroup();
+    const gr2 = makeGroup();
+    const gr3 = makeGroup();
 
-        for (let group of [gr1, gr2, gr3]) {
-            group = group.map(n => CYPHER[n + ZERO_AT]);
-            words.push(group.join(''));
-        }
+    const words = [];
 
-        const tiles = [{ id: 1, sid: 1, ch: ss.sum + '' }];
+    for (let group of [gr1, gr2, gr3]) {
+        group = group.map(n => CYPHER[n + ZERO_AT]);
+        words.push(group.join(''));
+    }
 
-        const chars = ((words[0] + words[1] + words[2]).split(''));
+    const tiles = [{ id: 1, sid: 1, ch: ss.sum + '' }];
 
-        for (let id = 2, i = 0; id <= 6; id++, i++) {
-            tiles.push({ id, sid: id, ch: chars[i] });
-        }
+    const chars = ((words[0] + words[1] + words[2]).split(''));
 
-        for (let id = 7, i = 0; id <= 15; id += 2, i++) {
-            tiles.push({ id, sid: id, ch: chars[5 + i] });
-        }
+    for (let id = 2, i = 0; id <= 6; id++, i++) {
+        tiles.push({ id, sid: id, ch: chars[i] });
+    }
 
-        for (let id = 8, i = 0; id <= 16; id += 2, i++) {
-            tiles.push({ id, sid: id, ch: chars[10 + i] });
-        }
+    for (let id = 7, i = 0; id <= 15; id += 2, i++) {
+        tiles.push({ id, sid: id, ch: chars[5 + i] });
+    }
 
-        ss.tiles = tiles;
-    };
+    for (let id = 8, i = 0; id <= 16; id += 2, i++) {
+        tiles.push({ id, sid: id, ch: chars[10 + i] });
+    }
 
-    makeTiles();
+    ss.tiles = tiles;
+
+    ss.rotoBlocks = sampleSize([1, 2, 3, 4, 5], ss.mode + 1);
 
     do {
         initPoss();
 
-        for (let i = 0; i < 5; i++) {
-            const block = BLOCKS[i];
+        for (const i of ss.rotoBlocks) {
+            const block = BLOCKS[i - 1];
             const count = random(0, 2);
 
             for (const id of block) {
@@ -154,71 +154,7 @@ const randomPuzzle = () => {
             }
         }
     } while ([1, 2, 3].some(i => sumAt(i) === ss.sum));
-
-    // do {
-    //     ss.turns = [random(0, 5), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2), random(0, 2)];
-
-    //     initPoss();
-
-    //     for (let i = 0; i < 7; i++) {
-    //         for (let j = 0; j < ss.turns[i]; j++) {
-    //             if (i) {
-    //                 onRotateBlock(i, true);
-    //             } else {
-    //                 onRotateGrid(true);
-    //             }
-    //         }
-    //     }
-    // } while ([1, 2, 3, 4, 5].some(i => sumAt(i) === ss.sum));
 };
-
-// export const onRotateBlock = (bi, cw,) => {
-//     const cis = BLOCKS[bi - 1].positions;
-//     const poss = cis.map(i => ss.cells[i - 1].pos);
-
-//     for (let i = 0; i < 3; i++) {
-//         let pos = poss[i];
-
-//         if (cw) {
-//             pos = i < 2 ? poss[i + 1] : poss[0];
-//         } else {
-//             pos = i > 0 ? poss[i - 1] : poss[2];
-//         }
-
-//         const j = cis[i];
-//         ss.cells[j - 1].pos = pos;
-//     }
-// };
-
-// export const onRotateGrid = (cw) => {
-//     const newPos = (pos) => {
-//         switch (pos) {
-//             case 1: return cw ? 3 : 8;
-//             case 2: return cw ? 7 : 4;
-//             case 3: return cw ? 12 : 1;
-//             case 4: return cw ? 2 : 13;
-//             case 5: return cw ? 6 : 9;
-//             case 6: return cw ? 11 : 5;
-//             case 7: return cw ? 16 : 2;
-//             case 8: return cw ? 1 : 17;
-//             case 9: return cw ? 5 : 14;
-//             case 11: return cw ? 15 : 6;
-//             case 12: return cw ? 19 : 3;
-//             case 13: return cw ? 4 : 18;
-//             case 14: return cw ? 9 : 15;
-//             case 15: return cw ? 14 : 11;
-//             case 16: return cw ? 18 : 7;
-//             case 17: return cw ? 8 : 19;
-//             case 18: return cw ? 13 : 16;
-//             case 19: return cw ? 17 : 12;
-//             default: return pos;
-//         }
-//     };
-
-//     for (let i = 0; i < 19; i++) {
-//         ss.cells[i].pos = newPos(ss.cells[i].pos);
-//     }
-// };
 
 export const rotateTile = (tile, cw) => {
     const block = findBlock(tile.sid);
@@ -236,12 +172,13 @@ export const rotateTile = (tile, cw) => {
 };
 
 export const makePuzzle = () => {
-    const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), turns: cloneDeep(ss.turns) });
+    const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), rotoBlocks: cloneDeep(ss.rotoBlocks), turns: cloneDeep(ss.turns) });
 
     if (ss.replay) {
-        const { sum, tiles, turns } = ss.initial;
+        const { sum, tiles, rotoBlocks, turns } = ss.initial;
         ss.sum = sum;
         ss.tiles = cloneDeep(tiles);
+        ss.rotoBlocks = cloneDeep(rotoBlocks);
         ss.turns = cloneDeep(turns);
     } else {
         randomPuzzle();
@@ -291,7 +228,7 @@ export const onResetStats = () => {
 
 export const persist = (statsOnly = false) => {
     const json = statsOnly ? { ..._stats } : {
-        ..._stats, sum: ss.sum, cells: ss.cells, turns: ss.turns, center: ss.center, steps: ss.steps, replay: ss.replay, initial: ss.initial,
+        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, turns: ss.turns, steps: ss.steps, replay: ss.replay, initial: ss.initial,
         surrender: ss.surrender, sfx: _sound.sfx, music: _sound.music,
     };
 

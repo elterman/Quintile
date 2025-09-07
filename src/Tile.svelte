@@ -28,7 +28,7 @@
                 _sound.play('won', { rate: 4 });
                 onOver();
             }
-     };
+        };
 
         _this.addEventListener('transitionend', onTransitionEnd);
         return () => _this.removeEventListener('transitionend', onTransitionEnd);
@@ -74,6 +74,7 @@
             {plus + num}
         </div>
     {/if}
+    <!-- <div class='id'>{tile.id}</div> -->
 </div>
 
 <style>
@@ -85,6 +86,14 @@
         place-items: center;
         box-sizing: border-box;
         /* border: 1px solid tan; */
+    }
+
+    .id {
+        grid-area: 1/1;
+        z-index: 2;
+        color: black;
+        transform: translate(18px, 18px);
+        font-family: Poppins;
     }
 
     .pentagon {

@@ -24,7 +24,7 @@
         grid-area: 1/1;
         display: grid;
         place-content: center;
-        grid: auto auto / auto;
+        /* grid: auto auto / auto; */
         gap: 20px;
         padding: 10px 0;
         opacity: 0;

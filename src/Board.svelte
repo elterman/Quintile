@@ -1,5 +1,4 @@
 <script>
-    import { fade } from 'svelte/transition';
     import { BOARD_SIZE, FLOOR, OVERHANG, PGON_SIDE, TDX, TDY } from './const';
     import { makePuzzle } from './shared.svelte';
     import { ss } from './state.svelte';
@@ -34,17 +33,17 @@
             <Tile {tile} />
         {/each}
     </div>
-    {#snippet dot(dx, dy)}
-        {#if !ss.flip}
-            <div class="dot" style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));" in:fade={{ delay: 500 }}>
-            </div>
-        {/if}
+    {#snippet dot(ix, dx, dy)}
+        <div
+            class="dot {!ss.over && !ss.flip && ss.rotoBlocks?.includes(ix) ? '' : 'hidden'}"
+            style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
+        </div>
     {/snippet}
-    {@render dot(TDX - OVERHANG, TDY)}
-    {@render dot(OVERHANG - TDX, TDY)}
-    {@render dot(TDX + 0.5, 2 * TDY + FLOOR)}
-    {@render dot(0, 3 * TDY + FLOOR)}
-    {@render dot(-(TDX + 0.5), 2 * TDY + FLOOR)}
+    {@render dot(1, TDX - OVERHANG, TDY)}
+    {@render dot(2, TDX + 0.5, 2 * TDY + FLOOR)}
+    {@render dot(3, 0, 3 * TDY + FLOOR)}
+    {@render dot(4, -(TDX + 0.5), 2 * TDY + FLOOR)}
+    {@render dot(5, OVERHANG - TDX, TDY)}
 </div>
 
 <style>
@@ -75,10 +74,18 @@
         grid-area: 1/1;
         place-self: start center;
         display: grid;
-        width: 12px;
+        width: 15px;
         aspect-ratio: 1;
         border-radius: 50%;
         background-size: cover;
         background: linear-gradient(135deg, pink, brown);
+        box-sizing: border-box;
+        border: 2px solid #00000080;
+        transition: opacity 0.3s linear;
+        transition-delay: 0.4s;
+    }
+
+    .hidden {
+        opacity: 0;
     }
 </style>

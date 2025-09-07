@@ -69,7 +69,7 @@
 
 <style>
     .prompt {
-        grid-area: 4/1;
+        grid-area: 5/1;
         place-self: center;
         margin-top: 15px;
         transform: scale(0);

@@ -1,10 +1,9 @@
 <script>
     import NumberFlow from '@number-flow/svelte';
     import { sumAt } from './shared.svelte';
-    import { _prompt, ss } from './state.svelte';
 </script>
 
-<div class="sums {ss.over || _prompt.id ? 'hidden' : ''}">
+<div class="sums">
     {#each [3, 1, 2] as i (i)}
         {@const sum = sumAt(i)}
         <div class="sum no-highlight color-{i}">
@@ -23,10 +22,6 @@
         border-radius: 50%;
         align-items: center;
         transition: opacity 0.2s;
-    }
-
-    .hidden {
-        opacity: 0;
     }
 
     .sum {

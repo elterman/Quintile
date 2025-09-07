@@ -66,9 +66,7 @@
         delete ss.intro;
         post(() => (ss.seenGamePage = true));
 
-        if (ss.cells) {
-            post(isSolved, 1000);
-        } else {
+        if (!ss.tiles) {
             _sound.play('score2');
             onStart();
         }
@@ -91,7 +89,7 @@
         </div>
         <div class="ops">
             <div class="op">
-                <PromptPanel ops={[{ label: 'easy', onClick: () => onPlay(1) }]} />
+                <PromptPanel ops={[{ label: 'somewhat easy', onClick: () => onPlay(1) }]} />
                 <span class="sub-op">2 of 5 clusters are rotatable</span>
             </div>
             <div class="op">
