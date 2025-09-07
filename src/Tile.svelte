@@ -1,6 +1,6 @@
 <script>
-    import { PGON_SIDE, SPOTS, TDX } from './const';
-    import { decode, isSolved, onOver, rotateTile } from './shared.svelte';
+    import { BLOCKS, PGON_SIDE, SPOTS, TDX } from './const';
+    import { decode, isSolved, onOver, persist, rotateTile } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
     import { findBlock, post } from './utils';
@@ -12,9 +12,24 @@
     const to = $derived(tile.rotate ? `${spot.x}% ${spot.y}%` : '0 0');
     const deg = $derived(tile.rotate ? spot[tile.rotate] : 0);
     const transform = $derived(`translate(${PGON_SIDE * spot.dx}px, ${PGON_SIDE * spot.dy}px) rotate(${deg}deg)`);
-    const disabled = $derived(ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.flip);
     let _this = $state();
     let duration = $derived(tile.rotate ? '0.5s' : 0);
+
+    const disabled = $derived.by(() => {
+        if (ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.flip) {
+            return true;
+        }
+
+        for (const i of ss.rotoBlocks) {
+            const block = BLOCKS[i - 1];
+
+            if (block.includes(tile.id)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
 
     $effect(() => {
         const onTransitionEnd = () => {
@@ -23,6 +38,7 @@
             }
 
             rotateTile(tile, tile.rotate === 'cw');
+            persist();
 
             post(() => delete ss.rotating, 400);
 

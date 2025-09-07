@@ -1,5 +1,5 @@
 import { cloneDeep, random, sample, sampleSize } from 'lodash-es';
-import { BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
+import { APP_STATE, BLOCKS, CHEER_EXCELLENT, CHEER_GREAT, CHEER_PERFECT, CHEER_PHENOMENAL, CHEER_YOU_DID_IT, CYPHER, GROUPS, PROMPT_PLAY_AGAIN, ZERO_AT } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
 import { findBlock, post, range } from './utils';
@@ -226,10 +226,13 @@ export const onResetStats = () => {
     post(() => delete _stats.reset, 1500);
 };
 
-export const persist = (statsOnly = false) => {
-    const json = statsOnly ? { ..._stats } : {
-        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, turns: ss.turns, steps: ss.steps, replay: ss.replay, initial: ss.initial,
-        surrender: ss.surrender, sfx: _sound.sfx, music: _sound.music,
+export const persist = () => {
+    let json = { ..._sound };
+    localStorage.setItem(APP_STATE, JSON.stringify(json));
+
+    json = {
+        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, turns: ss.turns, steps: ss.steps,
+        replay: ss.replay, initial: ss.initial, surrender: ss.surrender,
     };
 
     localStorage.setItem(ss.appKey(), JSON.stringify(json));

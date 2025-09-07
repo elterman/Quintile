@@ -1,15 +1,15 @@
 <script>
     import { fade } from 'svelte/transition';
-    import { YOU_GAVE_UP } from './const';
+    import { APP_STATE, YOU_GAVE_UP } from './const';
     import PromptPanel from './Prompt Panel.svelte';
     import { calculatePar, isSolved, onStart } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = '<span style=\'color: var(--aqua);\'>';
-    const gold = '<span style=\'color: var(--gold);\'>';
-    const blue = '<span style=\'color: var(--blue);\'>';
+    const hi = "<span style='color: var(--aqua);'>";
+    const gold = "<span style='color: var(--gold);'>";
+    const blue = "<span style='color: var(--blue);'>";
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -45,15 +45,21 @@
     };
 
     const loadGame = () => {
-        const json = localStorage.getItem(ss.appKey());
-        const job = JSON.parse(json);
+        let json = localStorage.getItem(APP_STATE);
+        let job = JSON.parse(json);
+
+        if (job) {
+            _sound.sfx = job.sfx;
+            _sound.music = job.music;
+        }
+
+        json = localStorage.getItem(ss.appKey());
+        job = JSON.parse(json);
 
         if (job) {
             _stats.plays = job.plays;
             _stats.total_score = job.total_score;
             _stats.best = job.best;
-            _sound.sfx = job.sfx;
-            _sound.music = job.music;
 
             reloadGame(job);
         }
@@ -80,6 +86,8 @@
             delete ss.tiles;
             delete ss.rotoBlocks;
             delete ss.sum;
+            delete ss.over;
+            delete ss.surrender;
         }
 
         ss.mode = mode;
