@@ -225,10 +225,9 @@
     .disclaimer {
         grid-area: 1/1;
         place-self: end center;
-        margin-right: 25px;
         font-family: Trajan;
         font-size: 10px;
-        transform: translateY(-10px);
+        transform: translateY(-15px);
         display: grid;
         justify-items: center;
         gap: 3px;
