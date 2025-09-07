@@ -1,7 +1,7 @@
 <script>
     import { PROMPT_NO, PROMPT_PLAY_AGAIN, PROMPT_RESET_STATS, PROMPT_SURRENDER, YOU_GAVE_UP, YOU_GAVE_UP_STATS_RESET } from './const';
     import PromptPanel from './Prompt Panel.svelte';
-    import { calcSolutionTurns, initPoss, isSolved, onOver, onResetStats, onStart } from './shared.svelte';
+    import { isSolved, onOver, onResetStats, onStart } from './shared.svelte';
     import { _prompt, _stats, ss } from './state.svelte';
 
     const label = $derived(_prompt.id);
@@ -13,13 +13,8 @@
         if (isSolved()) {
             onOver();
         } else {
-            const turns = calcSolutionTurns(ss.turns);
-
-            for (let i = 0; i < 7; i++) {
-                ss.turns[i] += turns[i];
-            }
-
-            initPoss();
+            // TODO
+            // initPoss();
         }
 
         if (!ss.replay) {

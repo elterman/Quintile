@@ -25,8 +25,3 @@ export const _stats = $state({
     best: null,
     ave: () => _stats.plays ? Math.round(_stats.total_score / _stats.plays) : 0,
 });
-
-export const ds = $state({
-    once: true,
-    turns: [0, 0, 0, 0, 0, 0, 0],
-});

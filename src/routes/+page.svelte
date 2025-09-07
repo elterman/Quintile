@@ -6,6 +6,7 @@
     import { post, underMouse, windowSize } from '../utils';
 
     let scale = $state(1);
+    let wsz = $state(0);
 
     $effect(() => {
         const disable = (e) => {
@@ -17,6 +18,7 @@
             let scy = 1;
 
             const { w, h } = windowSize();
+            wsz = w;
 
             if (w < 450) {
                 scx = w / 450;
@@ -62,7 +64,9 @@
         <Splash />
     {:else}
         <div class="content" style="scale: {scale};">
-            <div class="frame"></div>
+            {#if wsz > 600}
+                <div class="frame"></div>
+            {/if}
             <GamePage />
             <Intro />
             {#if !ss.intro}
@@ -82,7 +86,6 @@
             --gold: #ffe087;
             --silver: #dfe1e5;
             --bronze: #eeae93;
-            /* --background: #3c2213; */
             --background: #27160c;
             --aqua: #adffe4;
             --pink: #ffc0cb;

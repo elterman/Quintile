@@ -7,9 +7,9 @@
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = "<span style='color: var(--aqua);'>";
-    const gold = "<span style='color: var(--gold);'>";
-    const blue = "<span style='color: var(--blue);'>";
+    const hi = '<span style=\'color: var(--aqua);\'>';
+    const gold = '<span style=\'color: var(--gold);\'>';
+    const blue = '<span style=\'color: var(--blue);\'>';
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -25,7 +25,6 @@
         ss.sum = job.sum;
         ss.tiles = job.tiles;
         ss.rotoBlocks = job.rotoBlocks;
-        ss.turns = job.turns;
         ss.initial = job.initial;
         ss.steps = job.steps;
         ss.replay = job.replay;
@@ -99,7 +98,7 @@
 
 {#if ss.intro}
     <div class="intro" in:fade>
-        <div class="title clip-text background-gold-radial">QUINTILE</div>
+        <div class="title clip-text background-gold">QUINTILE</div>
         <div class="content" tabindex="-1">
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html CONTENT}

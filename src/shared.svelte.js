@@ -172,14 +172,13 @@ export const rotateTile = (tile, cw) => {
 };
 
 export const makePuzzle = () => {
-    const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), rotoBlocks: cloneDeep(ss.rotoBlocks), turns: cloneDeep(ss.turns) });
+    const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), rotoBlocks: cloneDeep(ss.rotoBlocks) });
 
     if (ss.replay) {
-        const { sum, tiles, rotoBlocks, turns } = ss.initial;
+        const { sum, tiles, rotoBlocks } = ss.initial;
         ss.sum = sum;
         ss.tiles = cloneDeep(tiles);
         ss.rotoBlocks = cloneDeep(rotoBlocks);
-        ss.turns = cloneDeep(turns);
     } else {
         randomPuzzle();
         ss.initial = initial();
@@ -231,7 +230,7 @@ export const persist = () => {
     localStorage.setItem(APP_STATE, JSON.stringify(json));
 
     json = {
-        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, turns: ss.turns, steps: ss.steps,
+        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, steps: ss.steps,
         replay: ss.replay, initial: ss.initial, surrender: ss.surrender,
     };
 
@@ -256,55 +255,18 @@ export const sumAt = i => {
 };
 
 export const calculatePar = () => {
-    // const turns = calcSolutionTurns(ss.initial.turns);
-    // const par = turns.reduce((sum, turns) => sum + Math.abs(turns), 0) + 1;
-    // ss.par = Math.min(par, 7);
+    let par = 0;
 
-    ss.par = 0;
-};
+    for (const b of BLOCKS) {
+        const id = b[0];
+        const tile = ss.tiles.find(tile => tile.id === id);
 
-const calcGridTurns = (gridTurns) => {
-    let turns = gridTurns % 6;
-
-    if (turns > 0) {
-        if (turns < 4) {
-            turns = -turns;
-        } else {
-            turns = 6 - turns;
-        }
-    } else if (turns < 0) {
-        if (turns > -4) {
-            turns = -turns;
-        } else {
-            turns = -6 - turns;
+        if (tile.id !== tile.sid) {
+            par += 1;
         }
     }
 
-    return turns;
-};
-
-const calcBlockTurns = (blockTurns) => {
-    let turns = blockTurns % 3;
-
-    if (turns === -2 || turns === 1) {
-        turns = -1;
-    } else if (turns === -1 || turns === 2) {
-        turns = 1;
-    }
-
-    return turns;
-};
-
-export const calcSolutionTurns = (turns) => {
-    const solTurns = [];
-
-    solTurns.push(calcGridTurns(turns[0]));
-
-    for (let i = 0; i < 6; i++) {
-        solTurns.push(calcBlockTurns(turns[i + 1]));
-    }
-
-    return solTurns;
+    ss.par = par;
 };
 
 const charAt = (id) => {
