@@ -3,7 +3,7 @@
     import { fade } from 'svelte/transition';
     import { APP_STATE, YOU_GAVE_UP } from './const';
     import PromptPanel from './Prompt Panel.svelte';
-    import { isSolved, onStart } from './shared.svelte';
+    import { isSolved, onOver, onStart } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
@@ -74,7 +74,12 @@
         delete ss.intro;
         post(() => (ss.seenGamePage = true));
 
-        if (!ss.tiles) {
+        if (ss.tiles) {
+            if (isSolved()) {
+                // _sound.play('won', { rate: 4 });
+                onOver();
+            }
+        } else {
             _sound.play('score2');
             onStart();
         }

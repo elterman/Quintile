@@ -4,8 +4,6 @@ import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
 import { findBlock, post, range } from './utils';
 
-let over = $state(false);
-
 export const log = (value) => console.log($state.snapshot(value));
 
 export const initPoss = () => {
@@ -21,12 +19,6 @@ const groupSum = (group) => group.reduce((sum, n) => sum + n, 0);
 const word2group = (word) => word.split('').map(decode);
 
 export const onOver = () => {
-    if (over) {
-        return;
-    }
-
-    over = true;
-
     const doOver = (prompt) => {
         ss.over = true;
 
@@ -203,7 +195,6 @@ export const makePuzzle = () => {
 
 export const onStart = (replay = false) => {
     _sound.play('dice');
-    over = false;
 
     if (ss.tiles) {
         ss.flip = true;
@@ -273,4 +264,3 @@ export const sumAt = i => {
 
     return groupSum(group);
 };
-
