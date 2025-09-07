@@ -25,8 +25,6 @@ export const onOver = () => {
 
     over = true;
 
-    calculatePar();
-
     const doOver = (prompt) => {
         ss.over = true;
 
@@ -172,8 +170,6 @@ export const rotateTile = (tile, cw) => {
 };
 
 export const makePuzzle = () => {
-    const initial = () => ({ sum: ss.sum, tiles: cloneDeep(ss.tiles), rotoBlocks: cloneDeep(ss.rotoBlocks) });
-
     if (ss.replay) {
         const { sum, tiles, rotoBlocks } = ss.initial;
         ss.sum = sum;
@@ -181,7 +177,7 @@ export const makePuzzle = () => {
         ss.rotoBlocks = cloneDeep(rotoBlocks);
     } else {
         randomPuzzle();
-        ss.initial = initial();
+        ss.initial = { sum: ss.sum, tiles: cloneDeep(ss.tiles), rotoBlocks: cloneDeep(ss.rotoBlocks) };
     }
 
     calculatePar();
@@ -230,7 +226,7 @@ export const persist = () => {
     localStorage.setItem(APP_STATE, JSON.stringify(json));
 
     json = {
-        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, steps: ss.steps,
+        ..._stats, sum: ss.sum, tiles: ss.tiles, rotoBlocks: ss.rotoBlocks, par: ss.par, steps: ss.steps,
         replay: ss.replay, initial: ss.initial, surrender: ss.surrender,
     };
 

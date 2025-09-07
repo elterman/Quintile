@@ -1,8 +1,9 @@
 <script>
+    import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { APP_STATE, YOU_GAVE_UP } from './const';
     import PromptPanel from './Prompt Panel.svelte';
-    import { calculatePar, isSolved, onStart } from './shared.svelte';
+    import { isSolved, onStart } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
@@ -21,11 +22,22 @@
         ${li}Solve the puzzle in as few steps as possible. </li>
         </ul>`;
 
+    onMount(() => {
+        let json = localStorage.getItem(APP_STATE);
+        let job = JSON.parse(json);
+
+        if (job) {
+            _sound.sfx = job.sfx;
+            _sound.music = job.music;
+        }
+    });
+
     const reloadGame = (job) => {
         ss.sum = job.sum;
         ss.tiles = job.tiles;
         ss.rotoBlocks = job.rotoBlocks;
         ss.initial = job.initial;
+        ss.par = job.par;
         ss.steps = job.steps;
         ss.replay = job.replay;
         ss.surrender = job.surrender;
@@ -33,8 +45,6 @@
         post(() => {
             if (isSolved()) {
                 ss.over = true;
-
-                calculatePar();
 
                 if (_stats.plays === 0) {
                     ss.cheer = ss.surrender = YOU_GAVE_UP;
@@ -44,16 +54,8 @@
     };
 
     const loadGame = () => {
-        let json = localStorage.getItem(APP_STATE);
-        let job = JSON.parse(json);
-
-        if (job) {
-            _sound.sfx = job.sfx;
-            _sound.music = job.music;
-        }
-
-        json = localStorage.getItem(ss.appKey());
-        job = JSON.parse(json);
+        const json = localStorage.getItem(ss.appKey());
+        const job = JSON.parse(json);
 
         if (job) {
             _stats.plays = job.plays;
