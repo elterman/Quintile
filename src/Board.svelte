@@ -81,7 +81,7 @@
         background: linear-gradient(135deg, pink, #ff4500);
         box-sizing: border-box;
         border: 2px solid #00000080;
-        transition: opacity 0.3s linear;
+        transition: opacity 0.3s ease-out;
         transition-delay: 0.4s;
     }
 

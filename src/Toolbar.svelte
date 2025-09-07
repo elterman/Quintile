@@ -1,11 +1,4 @@
 <script>
-    import MusicOff from '$lib/images/Music Off.webp';
-    import MusicOn from '$lib/images/Music On.webp';
-    import Question from '$lib/images/Question.webp';
-    import ResetStats from '$lib/images/Reset Stats.webp';
-    import SoundOff from '$lib/images/Sound Off.webp';
-    import SoundOn from '$lib/images/Sound On.webp';
-    import Surrender from '$lib/images/Surrender.webp';
     import { PROMPT_RESET_STATS, PROMPT_SURRENDER } from './const';
     import { persist } from './shared.svelte';
     import { _sound } from './sound.svelte';

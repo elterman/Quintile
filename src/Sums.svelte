@@ -1,12 +1,13 @@
 <script>
     import NumberFlow from '@number-flow/svelte';
     import { sumAt } from './shared.svelte';
+    import { ss } from './state.svelte';
 </script>
 
 <div class="sums">
     {#each [3, 1, 2] as i (i)}
         {@const sum = sumAt(i)}
-        <div class="sum no-highlight color-{i}">
+        <div class="sum no-highlight color-{i} {ss.over|| ss.flip ? 'over' : ''}">
             <NumberFlow prefix={sum > 0 ? '+' : ''} value={sum} />
         </div>
     {/each}
@@ -35,5 +36,9 @@
         font-family: Poppins;
         font-weight: bold;
         color: var(--background);
+    }
+
+    .over {
+        filter: hue-rotate(-30deg);
     }
 </style>

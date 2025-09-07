@@ -40,10 +40,16 @@
             rotateTile(tile, tile.rotate === 'cw');
             persist();
 
-            post(() => delete ss.rotating, 400);
+            if (ss.rotating === tile.id) {
+                _sound.play('cluck');
+
+                post(() => {
+                    delete ss.rotating;
+                }, 400);
+            }
 
             if (isSolved()) {
-                _sound.play('won', { rate: 4 });
+                post(() => _sound.play('won', { rate: 4 }), 100);
                 onOver();
             }
         };
@@ -59,7 +65,7 @@
             return;
         }
 
-        ss.rotating = true;
+        ss.rotating = tile.id;
 
         _sound.play('click');
         ss.steps += 1;
@@ -74,7 +80,7 @@
     };
 
     const pclass = $derived(
-        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over ? 'pulse' : ''}`,
+        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over || ss.flip ? 'over' : ''} ${ss.over ? 'pulse' : ''}`,
     );
 </script>
 
@@ -88,7 +94,6 @@
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}
         {@const transform = `translateY(${spot.flip ? -10 : center ? 23 : 15}%) rotate(${-deg}deg);`}
-        <!-- {@const duration = !ss.seenGamePage ? '0s' : ss.surrender ? '1s' : ss.flip ? '0s' : '0.5s'} -->
         {@const _class = `char ${center ? 'gold' : ''} ${plus || num === 0 || center ? '' : 'negative'} ${ss.surrender ? 'surrender' : ''}`}
         <div class={_class} style="transform: {transform}; transition: transform {duration} linear;">
             {plus + num}
@@ -138,6 +143,10 @@
 
     .disabled {
         pointer-events: none;
+    }
+
+    .over {
+        filter: hue-rotate(-30deg);
     }
 
     .pulse {
