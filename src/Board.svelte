@@ -35,7 +35,7 @@
     </div>
     {#snippet dot(ix, dx, dy)}
         <div
-            class="dot {!ss.intro && !ss.over && !ss.swirl && ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''}"
+            class="dot {ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''} {ss.intro || ss.over || ss.swirl ? '' : 'visible'}"
             style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
         </div>
     {/snippet}
@@ -74,11 +74,11 @@
         grid-area: 1/1;
         place-self: start center;
         display: grid;
-        width: 15px;
+        width: 18px;
         aspect-ratio: 1;
         border-radius: 50%;
         background-size: cover;
-        background: linear-gradient(135deg, pink, #ff4500);
+        background: radial-gradient(circle at 30% 30%, #b0b0b0 10%, #404040 25%, #303030 100%);
         box-sizing: border-box;
         border: 2px solid #00000080;
         transition: opacity 0.1s ease-out;
@@ -86,7 +86,11 @@
         opacity: 0;
     }
 
-    .rotatable {
+    .visible {
         opacity: 1;
+    }
+
+    .rotatable {
+        background: radial-gradient(circle at 30% 30%, pink 10%, orangered 25%, #ff4500 100%);
     }
 </style>
