@@ -3,14 +3,14 @@
     import { fade } from 'svelte/transition';
     import { APP_STATE, YOU_GAVE_UP } from './const';
     import PromptPanel from './Prompt Panel.svelte';
-    import { isSolved, onOver, onStart } from './shared.svelte';
+    import { hint, isSolved, onOver, onStart } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = '<span style=\'color: var(--aqua);\'>';
-    const gold = '<span style=\'color: var(--gold);\'>';
-    const blue = '<span style=\'color: var(--blue);\'>';
+    const hi = "<span style='color: var(--aqua);'>";
+    const gold = "<span style='color: var(--gold);'>";
+    const blue = "<span style='color: var(--blue);'>";
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -76,8 +76,9 @@
 
         if (ss.tiles) {
             if (isSolved()) {
-                // _sound.play('won', { rate: 4 });
                 onOver();
+            } else {
+                hint();
             }
         } else {
             _sound.play('score2');

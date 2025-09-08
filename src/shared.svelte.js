@@ -190,6 +190,9 @@ export const makePuzzle = () => {
     }
 
     calculatePar();
+
+    hint();
+
     persist();
 };
 
@@ -213,6 +216,21 @@ export const onStart = (replay = false) => {
     delete ss.surrender;
 
     persist();
+};
+
+export const hint = () => {
+    ss.rotating = 'hint';
+
+    post(() => {
+        for (const i of ss.rotoBlocks) {
+            const block = BLOCKS[i - 1];
+            const tobs = block.map((id) => ss.tiles.find((t) => t.id === id));
+
+            for (let j = 0; j < 3; j++) {
+                tobs[j].rotate = 'hint';
+            }
+        }
+    }, 500);
 };
 
 export const onResetStats = () => {

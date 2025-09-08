@@ -10,7 +10,7 @@
     const center = $derived(tile.sid === 1);
     const width = PGON_SIDE * TDX;
     const to = $derived(tile.rotate ? `${spot.x}% ${spot.y}%` : '0 0');
-    const deg = $derived(tile.rotate ? spot[tile.rotate] : 0);
+    const deg = $derived(tile.rotate ? (tile.rotate === 'hint' ? 36 : tile.rotate === 'unhint' ? 0 : spot[tile.rotate]) : 0);
     const transform = $derived(`translate(${PGON_SIDE * spot.dx}px, ${PGON_SIDE * spot.dy}px) rotate(${deg}deg)`);
     let _this = $state();
     let duration = $derived(tile.rotate ? (ss.surrender ? '1s' : '0.5s') : 0);
@@ -34,6 +34,21 @@
     $effect(() => {
         const onTransitionEnd = () => {
             if (!tile.rotate) {
+                return;
+            }
+
+            if (tile.rotate === 'hint') {
+                post(() => tile.rotate = 'unhint');
+                return;
+            }
+
+            if (tile.rotate === 'unhint') {
+                delete tile.rotate;
+
+                post(() => {
+                    delete ss.rotating;
+                }, 400);
+
                 return;
             }
 
