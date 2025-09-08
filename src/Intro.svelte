@@ -143,7 +143,7 @@
         grid-area: 1/1;
         place-self: center;
         filter: drop-shadow(3px 3px 5px black);
-        font-size: 64px;
+        font-size: 60px;
     }
 
     .content {

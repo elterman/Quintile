@@ -5,7 +5,7 @@
     import { ss } from '../state.svelte';
     import { post, underMouse, windowSize } from '../utils';
 
-    const SZX = 400;
+    const SZX = 380;
     const SZY = 740;
     let scale = $state(1);
     let wsz = $state(0);
