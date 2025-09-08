@@ -22,7 +22,7 @@
     {:else if !ss.surrender}
         <div id="steps" class="flow" transition:fade={{ duration: ss.surrender ? 0 : 400 }}>
             <NumberFlow value={ss.steps} />
-            <span>{` step${ss.steps === 1 ? '' : 's'}`}</span>
+            <span>{` rotation${ss.steps === 1 ? '' : 's'}`}</span>
             {#if scoreReport}
                 <span>{scoreReport}</span>
             {/if}

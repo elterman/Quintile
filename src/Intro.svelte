@@ -19,7 +19,7 @@
         ${ul}
         ${li}Tap a ${gold}yellow</span> tile to rotate the cluster ${gold}clockwise</span>.</li>
         ${li}Tap a ${blue}blue</span> tile to rotate it ${blue}counterclockwise</span>.</li>
-        ${li}Solve the puzzle in as few steps as possible.</li>
+        ${li}Solve in as few rotations as possible.</li>
         </ul>`;
 
     onMount(() => {
