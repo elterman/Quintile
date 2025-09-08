@@ -243,7 +243,7 @@
         transform: translate(-50%, -100%);
         opacity: 0.8;
         font-family: Roboto;
-        font-size: calc(min(1.5dvh, 11px));
+        font-size: calc(min(1.5dvh, 10px));
     }
 
     @font-face {
