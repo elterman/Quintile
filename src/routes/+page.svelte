@@ -67,11 +67,11 @@
             <div class="frame {wsz > 600 ? '' : 'hidden'}"></div>
             <GamePage />
             <Intro />
-            {#if !ss.intro}
-                <div class="disclaimer">
-                    <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
-                </div>
-            {/if}
+        </div>
+    {/if}
+    {#if !ss.intro}
+        <div class="disclaimer">
+            <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
         </div>
     {/if}
 </div>
@@ -228,14 +228,12 @@
     }
 
     .disclaimer {
-        grid-area: 1/1;
-        place-self: end center;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -100%);
         font-family: Roboto;
         font-size: 11px;
-        transform: translateY(-15px);
-        display: grid;
-        justify-items: center;
-        gap: 3px;
         opacity: 0.8;
     }
 
