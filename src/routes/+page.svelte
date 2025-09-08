@@ -66,7 +66,7 @@
         <Splash />
     {:else}
         <div class="content" style="scale: {scale};">
-            <div class="frame {wsz > 600 ? '' : 'hidden'}" style="width: {SZX}px; height: {SZY}px;"></div>
+            <div class="frame {wsz > 100 ? '' : 'hidden'}" style="width: {SZX}px; height: {SZY}px;"></div>
             <GamePage />
             <Intro />
         </div>
