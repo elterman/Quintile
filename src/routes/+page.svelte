@@ -75,12 +75,12 @@
             <Intro />
         </div>
     {/if}
-    {#if !ss.intro}
-        <div class="disclaimer">
-            <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
-        </div>
-    {/if}
 </div>
+{#if !ss.intro}
+    <div class="disclaimer">
+        <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
+    </div>
+{/if}
 
 <style>
     :global {
@@ -236,9 +236,9 @@
         bottom: 0;
         left: 50%;
         transform: translate(-50%, -100%);
-        font-family: Roboto;
-        font-size: 11px;
         opacity: 0.8;
+        font-family: Roboto;
+        font-size: calc(min(1.5dvh, 11px));
     }
 
     @font-face {
