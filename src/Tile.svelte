@@ -94,8 +94,10 @@
         }
     };
 
+    const solved = $derived(isSolved());
+
     const pclass = $derived(
-        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over || ss.swirl ? 'over' : ''} ${ss.over ? 'pulse' : ''}`,
+        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${solved || ss.swirl ? 'over' : ''} ${ss.over ? 'pulse' : ''}`,
     );
 </script>
 
@@ -109,7 +111,7 @@
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}
         {@const transform = `translateY(${spot.flip ? -10 : center ? 23 : 15}%) rotate(${-deg}deg);`}
-        {@const _class = `char ${center ? 'bronze' : ''} ${plus || num === 0 || center ? '' : 'negative'} ${center && ss.over ? 'glow' : ''}`}
+        {@const _class = `char ${center ? 'bronze' : ''} ${plus || num === 0 || center ? '' : 'negative'} ${center && solved ? 'glow' : ''}`}
         <div class={_class} style="transform: {transform}; transition: transform {duration} linear;">
             {plus + num}
         </div>
