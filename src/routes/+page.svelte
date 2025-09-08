@@ -24,9 +24,13 @@
 
             if (w < SZX) {
                 scx = w / SZX;
+            } else if (w < 440) {
+                scx = w / SZX;
             }
 
-            if (h < SZY) {
+            if (SZY * scx <= h) {
+                scy = scx;
+            } else if (h < SZY) {
                 scy = h / SZY;
             }
 
