@@ -57,7 +57,7 @@
 </script>
 
 <div class="toolbar">
-    <TextButton id="tb-help" text={['BACK']} onClick={onHelp} />
+    <TextButton id="tb-help" text={['HOME']} onClick={onHelp} />
     <TextButton id="tb-surrender" text={['GIVE', 'UP']} onClick={onSurrender} disabled={ss.over || ss.surrender} />
     <TextButton id="tb-reset-stats" text={['RESET', 'STATS']} onClick={onResetStats} disabled={_stats.plays === 0} />
     <TextButton id="tb-sound" text={['SOUND', _sound.sfx ? 'ON' : 'OFF']} onClick={onSound} />

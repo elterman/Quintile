@@ -35,7 +35,7 @@
     </div>
     {#snippet dot(ix, dx, dy)}
         <div
-            class="dot {!ss.intro && !ss.over && !ss.swirl && ss.rotoBlocks?.includes(ix) ? 'visible' : ''}"
+            class="dot {!ss.intro && !ss.over && !ss.swirl && ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''}"
             style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
         </div>
     {/snippet}
@@ -86,7 +86,7 @@
         opacity: 0;
     }
 
-    .visible {
+    .rotatable {
         opacity: 1;
     }
 </style>

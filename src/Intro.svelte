@@ -8,9 +8,9 @@
     import { _stats, ss } from './state.svelte';
     import { post } from './utils';
 
-    const hi = "<span style='color: var(--aqua);'>";
-    const gold = "<span style='color: var(--gold);'>";
-    const blue = "<span style='color: var(--blue);'>";
+    const hi = '<span style="color: var(--aqua);">';
+    const gold = '<span style="color: var(--gold);">';
+    const blue = '<span style="color: var(--blue);">';
     const ul = '<ul style="margin: 15px 0 0 0;">';
     const li = '<li style="margin: 10px 0 0 -20px;">';
 
@@ -19,7 +19,7 @@
         ${ul}
         ${li}Tap a ${gold}yellow</span> tile to rotate the cluster ${gold}clockwise</span>.</li>
         ${li}Tap a ${blue}blue</span> tile to rotate it ${blue}counterclockwise</span>.</li>
-        ${li}Solve the puzzle in as few steps as possible. </li>
+        ${li}Solve the puzzle in as few steps as possible.</li>
         </ul>`;
 
     onMount(() => {
