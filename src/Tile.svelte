@@ -16,7 +16,7 @@
     let duration = $derived(tile.rotate ? (ss.surrender ? '1s' : '0.5s') : 0);
 
     const disabled = $derived.by(() => {
-        if (ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.flip) {
+        if (ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.swirl) {
             return true;
         }
 
@@ -80,7 +80,7 @@
     };
 
     const pclass = $derived(
-        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over || ss.flip ? 'over' : ''} ${ss.over ? 'pulse' : ''}`,
+        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${ss.over || ss.swirl ? 'over' : ''} ${ss.over ? 'pulse' : ''}`,
     );
 </script>
 

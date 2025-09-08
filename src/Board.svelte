@@ -16,8 +16,8 @@
                 return;
             }
 
-            if (id === 'board-content' && ss.flip) {
-                delete ss.flip;
+            if (id === 'board-content' && ss.swirl) {
+                delete ss.swirl;
                 makePuzzle();
             }
         };
@@ -28,14 +28,14 @@
 </script>
 
 <div id="board" class="board {ss.surrender ? 'surrender' : ''}" style="width: {BOARD_SIZE}px;">
-    <div id="board-content" class="content {ss.flip ? 'flipped' : ''}">
+    <div id="board-content" class="content {ss.swirl ? 'swirl' : ''}">
         {#each ss.tiles as tile (tile.id)}
             <Tile {tile} />
         {/each}
     </div>
     {#snippet dot(ix, dx, dy)}
         <div
-            class="dot {!ss.over && !ss.flip && ss.rotoBlocks?.includes(ix) ? '' : 'hidden'}"
+            class="dot {!ss.over && !ss.swirl && ss.rotoBlocks?.includes(ix) ? '' : 'hidden'}"
             style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
         </div>
     {/snippet}
@@ -62,7 +62,7 @@
         transition: linear transform 0.7s;
     }
 
-    .flipped {
+    .swirl {
         transform: rotateZ(360deg) scale(0);
     }
 

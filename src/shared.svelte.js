@@ -23,7 +23,7 @@ export const onOver = () => {
         ss.over = true;
 
         post(() => {
-            delete ss.flip;
+            delete ss.swirl;
             _sound.play('won');
 
             post(() => {
@@ -197,7 +197,7 @@ export const onStart = (replay = false) => {
     _sound.play('dice');
 
     if (ss.tiles) {
-        ss.flip = true;
+        ss.swirl = true;
 
         if (replay) {
             ss.replay = true;

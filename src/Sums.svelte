@@ -7,7 +7,7 @@
 <div class="sums">
     {#each [3, 1, 2] as i (i)}
         {@const sum = sumAt(i)}
-        <div class="sum no-highlight color-{i} {ss.over|| ss.flip ? 'over' : ''}">
+        <div class="sum no-highlight color-{i} {ss.over|| ss.swirl ? 'over' : ''}">
             <NumberFlow prefix={sum > 0 ? '+' : ''} value={sum} />
         </div>
     {/each}
