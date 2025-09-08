@@ -5,6 +5,8 @@
     import { ss } from '../state.svelte';
     import { post, underMouse, windowSize } from '../utils';
 
+    const SZX = 400;
+    const SZY = 740;
     let scale = $state(1);
     let wsz = $state(0);
 
@@ -20,12 +22,12 @@
             const { w, h } = windowSize();
             wsz = w;
 
-            if (w < 450) {
-                scx = w / 450;
+            if (w < SZX) {
+                scx = w / SZX;
             }
 
-            if (h < 788) {
-                scy = h / 788;
+            if (h < SZY) {
+                scy = h / SZY;
             }
 
             scale = Math.min(scx, scy);
@@ -64,7 +66,7 @@
         <Splash />
     {:else}
         <div class="content" style="scale: {scale};">
-            <div class="frame {wsz > 600 ? '' : 'hidden'}"></div>
+            <div class="frame {wsz > 600 ? '' : 'hidden'}" style="width: {SZX}px; height: {SZY}px;"></div>
             <GamePage />
             <Intro />
         </div>
@@ -218,8 +220,6 @@
         grid-area: 1/1;
         place-self: center;
         touch-action: none;
-        width: 450px;
-        height: 788px;
         background: #00000050;
     }
 
