@@ -182,6 +182,11 @@
             background-size: cover;
         }
 
+        .color-over {
+            background-image: url('$lib/images/Green Radial.webp');
+            background-size: cover;
+        }
+
         .color-2 {
             background-image: url('$lib/images/Gold Radial.webp');
             background-size: cover;

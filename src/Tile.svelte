@@ -97,7 +97,7 @@
     const solved = $derived(isSolved());
 
     const pclass = $derived(
-        `pentagon ${spot.flip ? 'flip' : ''} color-${spot.cix} ${disabled ? 'disabled' : ''} ${solved || ss.swirl ? 'over' : ''} ${ss.over ? 'pulse' : ''}`,
+        `pentagon ${spot.flip ? 'flip' : ''} color-${solved && spot.cix === 1 ? 'over' : spot.cix} ${disabled ? 'disabled' : ''} ${ss.over ? 'pulse' : ''}`,
     );
 </script>
 
@@ -162,9 +162,9 @@
         pointer-events: none;
     }
 
-    .over {
+    /* .over {
         filter: hue-rotate(-30deg);
-    }
+    } */
 
     .pulse {
         animation: pulse 0.2s alternate 6 ease-in-out;

@@ -7,7 +7,7 @@
 <div class="sums">
     {#each [3, 1, 2] as i (i)}
         {@const sum = sumAt(i)}
-        <div class="sum no-highlight color-{i} {ss.over|| ss.swirl ? 'over' : ''}">
+        <div class="sum no-highlight color-{ss.over && i === 1 ? 'over' : i}">
             <NumberFlow prefix={sum > 0 ? '+' : ''} value={sum} />
         </div>
     {/each}
@@ -38,7 +38,7 @@
         color: var(--background);
     }
 
-    .over {
+    /* .over {
         filter: hue-rotate(-30deg);
-    }
+    } */
 </style>
