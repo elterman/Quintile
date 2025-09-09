@@ -104,7 +104,7 @@
 
     @keyframes shake {
         from {
-            scale: 1 1;
+            scale: 1;
         }
         33% {
             scale: 1.5;
@@ -113,7 +113,7 @@
             scale: 1.5;
         }
         to {
-            scale: 1 1;
+            scale: 1;
         }
     }
 </style>
