@@ -28,7 +28,7 @@
     };
 
     const disabled = $derived.by(() => {
-        if (ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.swirl) {
+        if (ss.rotating || spot.pos < 2 || ss.over || ss.cheer || ss.surrender || ss.swirl) {
             return true;
         }
 
@@ -102,7 +102,7 @@
 
         _prompt.opacity = 0;
 
-        if (spot.cix < 2) {
+        if (spot.pos < 2) {
             return;
         }
 
@@ -111,7 +111,7 @@
         _sound.play('click');
         ss.steps += 1;
 
-        const cw = spot.cix === 2;
+        const cw = spot.pos === 2;
         const block = findBlock(tile.sid);
         const tobs = block.map((sid) => ss.tiles.find((t) => t.sid === sid));
 

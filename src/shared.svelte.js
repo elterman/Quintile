@@ -16,8 +16,6 @@ export const decode = ch => CYPHER.indexOf(ch) - ZERO_AT;
 
 const groupSum = (group) => group.reduce((sum, n) => sum + n, 0);
 
-const word2group = (word) => word.split('').map(decode);
-
 export const onOver = () => {
     const doOver = (prompt) => {
         ss.over = true;
@@ -118,12 +116,16 @@ const randomPuzzle = () => {
         tiles.push({ id, sid: id, ch: chars[i] });
     }
 
-    for (let id = 7, i = 0; id <= 15; id += 2, i++) {
-        tiles.push({ id, sid: id, ch: chars[5 + i] });
+    let ids = [8, 9, 10, 11, 12];
+
+    for (let i = 0; i < 5; i++) {
+        tiles.push({ id: ids[i], sid: ids[i], ch: chars[5 + i] });
     }
 
-    for (let id = 8, i = 0; id <= 16; id += 2, i++) {
-        tiles.push({ id, sid: id, ch: chars[10 + i] });
+    ids = [13, 14, 15, 16, 7];
+
+    for (let i = 0; i < 5;  i++) {
+        tiles.push({ id: ids[i], sid: ids[i], ch: chars[10 + i] });
     }
 
     ss.tiles = tiles;
@@ -145,7 +147,8 @@ const randomPuzzle = () => {
                 }
             }
         }
-    } while ([1, 2, 3].some(i => sumAt(i) === ss.sum));
+    // } while ([1, 2, 3].some(i => sumAt(i) === ss.sum));
+    } while (isSolved());
 };
 
 export const rotateTile = (tile, cw) => {
@@ -280,7 +283,7 @@ const wordAt = (ids) => {
 
 export const sumAt = i => {
     const word = wordAt(GROUPS[i - 1]);
-    const group = word2group(word);
+    const group = word.split('').map(decode);
 
     return groupSum(group);
 };
