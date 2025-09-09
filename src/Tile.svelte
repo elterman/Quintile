@@ -3,7 +3,7 @@
     import { decode, isSolved, onOver, persist, rotateTile } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, ss } from './state.svelte';
-    import { findBlock, post } from './utils';
+    import { findBlock, findBlockIndex, post } from './utils';
 
     const { tile } = $props();
     const spot = $derived(SPOTS[tile.sid]);
@@ -15,20 +15,24 @@
     let _this = $state();
     let duration = $derived(tile.rotate ? (ss.surrender ? '1s' : '0.5s') : 0);
 
+    const inRotoBlock = (tob) => {
+        for (const i of ss.rotoBlocks) {
+            const block = BLOCKS[i - 1];
+
+            if (block.includes(tob.id)) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     const disabled = $derived.by(() => {
         if (ss.rotating || spot.cix < 2 || ss.over || ss.cheer || ss.surrender || ss.swirl) {
             return true;
         }
 
-        for (const i of ss.rotoBlocks) {
-            const block = BLOCKS[i - 1];
-
-            if (block.includes(tile.id)) {
-                return false;
-            }
-        }
-
-        return true;
+        return !inRotoBlock(tile);
     });
 
     $effect(() => {
@@ -38,7 +42,11 @@
             }
 
             if (tile.rotate === 'hint') {
-                post(() => (tile.rotate = 'unhint'));
+                post(() => {
+                    const tob = ss.tiles.find(t => t.id === tile.id);
+                    tob.rotate = 'unhint';
+                });
+                
                 return;
             }
 
@@ -73,7 +81,21 @@
         return () => _this.removeEventListener('transitionend', onTransitionEnd);
     });
 
-    const onPointerDown = () => {
+    const onPointerDown = (e) => {
+        const id = +e.target.id.split('-')[1];
+        const tob = ss.tiles.find((t) => t.id === id);
+
+        if (!inRotoBlock(tob)) {
+            _sound.play('lost', { rate: 2 });
+
+            ss.shake = findBlockIndex(tob.id);
+            post(() => delete ss.shake, 200);
+        }
+    };
+
+    const onPgonPointerDown = (e) => {
+        e.stopPropagation();
+
         _prompt.opacity = 0;
 
         if (spot.cix < 2) {
@@ -105,8 +127,9 @@
     id={`tile-${tile.sid}`}
     bind:this={_this}
     class="tile no-highlight"
-    style="transform: {transform}; transform-origin: {to}; transition: transform {duration} linear;">
-    <div class={pclass} style="width: {width}px;" onpointerdown={onPointerDown}></div>
+    style="transform: {transform}; transform-origin: {to}; transition: transform {duration} linear;"
+    onpointerdown={onPointerDown}>
+    <div class={pclass} style="width: {width}px;" onpointerdown={onPgonPointerDown}></div>
     {#if ss.tiles}
         {@const num = decode(tile.ch)}
         {@const plus = num > 0 && !center ? '+' : ''}

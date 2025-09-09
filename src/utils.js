@@ -59,3 +59,5 @@ export const post = (fn, ms) => setTimeout(fn, ms);
 export const range = (n) => [...Array(n + 1).keys()].slice(1);
 
 export const findBlock = (id) => BLOCKS.find((b) => b.includes(id));
+
+export const findBlockIndex = (id) => BLOCKS.findIndex((b) => b.includes(id)) + 1;

@@ -34,9 +34,9 @@
         {/each}
     </div>
     {#snippet dot(ix, dx, dy)}
-        <div
-            class="dot {ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''} {ss.intro || ss.over || ss.swirl ? '' : 'visible'}"
-            style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
+        {@const _class = `dot-inner ${ss.intro || ss.over || ss.swirl ? '' : 'visible'} ${ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''} ${ss.shake === ix ? 'shake' : ''}`}
+        <div class="dot" style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
+            <div class={_class}></div>
         </div>
     {/snippet}
     {@render dot(1, TDX - OVERHANG, TDY)}
@@ -74,13 +74,17 @@
         grid-area: 1/1;
         place-self: start center;
         display: grid;
-        width: 18px;
-        aspect-ratio: 1;
         border-radius: 50%;
-        background-size: cover;
-        background: radial-gradient(circle at 30% 30%, #b0b0b0 10%, #404040 25%, #303030 100%);
+    }
+
+    .dot-inner {
+        display: grid;
         box-sizing: border-box;
         border: 2px solid #00000080;
+        border-radius: 50%;
+        width: 18px;
+        aspect-ratio: 1;
+        background: radial-gradient(circle at 30% 30%, #b0b0b0 10%, #404040 25%, #303030 100%);
         transition: opacity 0.1s ease-out;
         transition-delay: 0.6s;
         opacity: 0;
@@ -92,5 +96,24 @@
 
     .rotatable {
         background: radial-gradient(circle at 30% 30%, pink 10%, orangered 25%, #ff4500 100%);
+    }
+
+    .shake {
+        animation: shake 0.1s 2 linear;
+    }
+
+    @keyframes shake {
+        from {
+            scale: 1 1;
+        }
+        33% {
+            scale: 1.5;
+        }
+        66% {
+            scale: 1.5;
+        }
+        to {
+            scale: 1 1;
+        }
     }
 </style>
