@@ -1,4 +1,5 @@
-import { APP_STATE, PROMPT_PLAY_AGAIN } from './const';
+import { APP_STATE, PROMPT_TRANSITION } from './const';
+import { post } from './utils';
 
 export const ss = $state({
     mode: 1,
@@ -9,12 +10,21 @@ export const ss = $state({
 });
 
 export const _prompt = $state({
-    id: PROMPT_PLAY_AGAIN,
-    opacity: 1,
+    id: '',
+    opacity: 0,
 
     set: (id) => {
-        _prompt.id = id;
-        _prompt.opacity = id ? 1 : 0;
+        const doSet = () => {
+            _prompt.id = id;
+            _prompt.opacity = id ? 1 : 0;
+        };
+
+        if (_prompt.id && _prompt.id !== id) {
+            _prompt.opacity = 0;
+            post(() => { _prompt.id = null; doSet(); }, PROMPT_TRANSITION);
+        } else {
+            doSet();
+        }
     }
 });
 
