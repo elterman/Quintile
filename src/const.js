@@ -1,4 +1,4 @@
-export const APP_STATE = 'Quintile V1';
+export const APP_STATE = 'Quintile V2';
 export const GAME_PAGE = 'GAME PAGE';
 export const X = '✖';
 export const CHEER_YOU_DID_IT = 'you did it!';
