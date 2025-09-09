@@ -81,12 +81,12 @@
             --gold: #ffe087;
             --silver: #dfe1e5;
             --bronze: #eeae93;
-            color: var(--bronze);
-            --background: #27160c;
-            background: var(--background);
             --aqua: #adffe4;
             --purple: #ad85f9;
             --blue: #74d6fe;
+            color: var(--bronze);
+            --background: #27160c;
+            background: var(--background);
         }
 
         .button-base {
