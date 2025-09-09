@@ -238,6 +238,8 @@ export const onResetStats = () => {
         return;
     }
 
+    _sound.play('score1');
+
     _stats.plays = 0;
     _stats.total_score = 0;
     _stats.best = null;
