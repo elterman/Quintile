@@ -4,14 +4,9 @@
     import { ss } from './state.svelte';
 
     const scoreReport = $derived.by(() => {
-        if (!ss.over || ss.steps === 0) {
-            return null;
-        }
-
         const score = ss.score();
-        return `  •  ${score === 0 ? 'even' : `${Math.abs(score)} ${score > 0 ? 'over' : 'under'}`} par`;
+        return `${score === 0 ? 'even' : `${Math.abs(score)} ${score > 0 ? 'over' : 'under'}`} par`;
     });
-
 </script>
 
 <div class="steps">
@@ -23,8 +18,9 @@
         <div id="steps" class="flow" transition:fade={{ duration: ss.surrender ? 0 : 400 }}>
             <NumberFlow value={ss.steps} />
             <span>{` rotation${ss.steps === 1 ? '' : 's'}`}</span>
-            {#if scoreReport}
-                <span>{scoreReport}</span>
+            {#if ss.over && ss.steps > 0}
+                <span class="bullet">  •  </span>
+                <span class='report'>{scoreReport}</span>
             {/if}
         </div>
     {/if}
@@ -40,11 +36,11 @@
         font-size: 22px;
         place-self: center;
         place-items: center;
-        color: var(--bronze);
     }
 
     .message {
         grid-area: 1/1;
+        color: var(--aqua);
     }
 
     .flow {
@@ -52,5 +48,14 @@
         display: grid;
         grid-auto-flow: column;
         align-items: center;
+    }
+
+    .bullet {
+        font-family: Poppins;
+        margin-top: -6px;
+    }
+
+    .report {
+        color: var(--aqua);
     }
 </style>

@@ -63,7 +63,6 @@
         transition: transform 0.1s;
         font-family: Roboto Condensed;
         font-size: 15px;
-        color: var(--bronze);
         background-size: cover;
     }
 

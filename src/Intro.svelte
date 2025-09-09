@@ -152,7 +152,6 @@
         display: grid;
         align-content: start;
         width: 330px;
-        color: var(--bronze);
         filter: drop-shadow(2px 2px 3px black);
     }
 
