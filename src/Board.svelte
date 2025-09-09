@@ -34,7 +34,7 @@
         {/each}
     </div>
     {#snippet dot(ix, dx, dy)}
-        {@const _class = `dot-inner ${ss.intro || ss.over || ss.swirl ? '' : 'visible'} ${ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''} ${ss.shake === ix ? 'shake' : ''}`}
+        {@const _class = `dot-inner ${ss.home || ss.over || ss.swirl ? '' : 'visible'} ${ss.rotoBlocks?.includes(ix) ? 'rotatable' : ''} ${ss.shake === ix ? 'shake' : ''}`}
         <div class="dot" style="transform: translate({dx * PGON_SIDE}px, calc({dy * PGON_SIDE}px - 50%));">
             <div class={_class}></div>
         </div>

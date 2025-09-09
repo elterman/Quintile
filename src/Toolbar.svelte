@@ -5,8 +5,9 @@
     import { _prompt, _stats, ss } from './state.svelte';
     import TextButton from './Text Button.svelte';
 
-    const onHelp = () => {
-        ss.intro = true;
+    const onHome = () => {
+        _sound.play('plop');
+        ss.home = true;
     };
 
     const onSurrender = () => {
@@ -57,7 +58,7 @@
 </script>
 
 <div class="toolbar">
-    <TextButton id="tb-help" text={['HOME']} onClick={onHelp} />
+    <TextButton id="tb-home" text={['HOME']} onClick={onHome} />
     <TextButton id="tb-surrender" text={['GIVE', 'UP']} onClick={onSurrender} disabled={ss.over || ss.surrender} />
     <TextButton id="tb-reset-stats" text={['RESET', 'STATS']} onClick={onResetStats} disabled={_stats.plays === 0} />
     <TextButton id="tb-sound" text={['SOUND', _sound.sfx ? 'ON' : 'OFF']} onClick={onSound} />

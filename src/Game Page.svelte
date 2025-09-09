@@ -8,7 +8,7 @@
     import Toolbar from './Toolbar.svelte';
 </script>
 
-<div class="game-page {ss.intro ? '' : 'opacity'}">
+<div class="game-page {ss.home ? '' : 'opacity'}">
     <Stats />
     <Steps />
     <Board />

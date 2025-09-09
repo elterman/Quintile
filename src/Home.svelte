@@ -71,8 +71,7 @@
             _sound.playMusic();
         }
 
-        delete ss.intro;
-        post(() => (ss.seenGamePage = true));
+        delete ss.home;
 
         if (ss.tiles) {
             if (isSolved()) {
@@ -104,8 +103,8 @@
     };
 </script>
 
-{#if ss.intro}
-    <div class="intro" in:fade>
+{#if ss.home}
+    <div class="home" in:fade>
         <div class="title clip-text background-gold">QUINTILE</div>
         <div class="content" tabindex="-1">
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -129,7 +128,7 @@
 {/if}
 
 <style>
-    .intro {
+    .home {
         z-index: 1;
         place-self: center;
         grid-area: 1/1;

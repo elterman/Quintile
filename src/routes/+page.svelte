@@ -1,9 +1,9 @@
 <script>
     import GamePage from '../Game Page.svelte';
-    import Intro from '../Intro.svelte';
+    import Home from '../Home.svelte';
     import Splash from '../Splash.svelte';
     import { ss } from '../state.svelte';
-    import { post, underMouse, windowSize } from '../utils';
+    import { post, windowSize } from '../utils';
 
     const SZX = 380;
     const SZY = 740;
@@ -53,30 +53,21 @@
     let splash = $state(true);
     post(() => (splash = false), 2000);
 
-    const onPointerDown = (e) => {
-        if (ss.keyboard) {
-            if (!underMouse(e, ['.keyboard', '#tb-sound'])) {
-                delete ss.keyboard;
-            }
-
-            return;
-        }
-    };
 </script>
 
 <div class="vignette"></div>
-<div class="app" onpointerdown={onPointerDown}>
+<div class="app">
     {#if splash}
         <Splash />
     {:else}
         <div class="content" style="scale: {scale};">
             <div class="frame {wsz > 600 ? '' : 'hidden'}" style="width: {SZX}px; height: {SZY}px;"></div>
             <GamePage />
-            <Intro />
+            <Home />
         </div>
     {/if}
 </div>
-{#if !ss.intro}
+{#if !ss.home}
     <div class="disclaimer">
         <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
     </div>

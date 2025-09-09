@@ -3,7 +3,7 @@ import { post } from './utils';
 
 export const ss = $state({
     mode: 1,
-    intro: true,
+    home: true,
     steps: 0,
     score: () => ss.steps - ss.par,
     appKey: () => `${APP_STATE} • ${ss.mode}`,
