@@ -85,7 +85,7 @@
             --background: #27160c;
             background: var(--background);
             --aqua: #adffe4;
-            --pink: #ffc0cb;
+            --purple: #ad85f9;
             --blue: #74d6fe;
         }
 

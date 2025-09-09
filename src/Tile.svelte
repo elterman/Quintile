@@ -43,10 +43,10 @@
 
             if (tile.rotate === 'hint') {
                 post(() => {
-                    const tob = ss.tiles.find(t => t.id === tile.id);
+                    const tob = ss.tiles.find((t) => t.id === tile.id);
                     tob.rotate = 'unhint';
                 });
-                
+
                 return;
             }
 
@@ -82,10 +82,14 @@
     });
 
     const onPointerDown = (e) => {
+        if (ss.rotating || ss.over || ss.cheer || ss.surrender || ss.swirl) {
+            return;
+        }
+
         const id = +e.target.id.split('-')[1];
         const tob = ss.tiles.find((t) => t.id === id);
 
-        if (!inRotoBlock(tob)) {
+        if (tob.id > 6 && !inRotoBlock(tob)) {
             _sound.play('lost', { rate: 2 });
 
             ss.shake = findBlockIndex(tob.id);
