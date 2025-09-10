@@ -124,6 +124,10 @@
                 <PromptPanel ops={[{ label: 'not easy', onClick: () => onPlay(3) }]} />
                 <span class="sub-op">4 of 5 clusters are rotatable</span>
             </div>
+            <div class="op">
+                <PromptPanel ops={[{ label: 'hard', onClick: () => onPlay(4) }]} />
+                <span class="sub-op">5 of 5 clusters are rotatable</span>
+            </div>
         </div>
     </div>
 {/if}
@@ -134,7 +138,7 @@
         place-self: center;
         grid-area: 1/1;
         display: grid;
-        gap: 40px;
+        gap: 30px;
         justify-items: center;
         font-family: Trajan;
     }
@@ -148,7 +152,7 @@
 
     .content {
         grid-area: 2/1;
-        font-size: 20px;
+        font-size: 19px;
         display: grid;
         align-content: start;
         width: 330px;

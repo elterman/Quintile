@@ -147,7 +147,6 @@ const randomPuzzle = () => {
                 }
             }
         }
-    // } while ([1, 2, 3].some(i => sumAt(i) === ss.sum));
     } while (isSolved());
 };
 
