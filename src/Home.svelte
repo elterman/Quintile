@@ -18,8 +18,8 @@
     const CONTENT = `
         <span>Rotate ${hi}clusters of three</span> connected tiles until the ${hi}sum of each color group</span> matches the number at the ${hi}center</span>.</span>
         ${ul}
-        ${li}Tap a  ${blue}blue</span> or ${gold}yellow</span> tile to rotate the cluster.</li>
-        ${li}The tapped tile moves into the ${purple}purple</span> group.</li>
+        ${li}Tap a  ${blue}blue</span> or ${gold}yellow</span> tile to rotate its cluster.</li>
+        ${li}The tapped tile shifts into the ${purple}purple</span> group.</li>
         ${li}Solve the puzzle in as few rotations as possible.</li>
         </ul>`;
 
