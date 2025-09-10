@@ -124,13 +124,17 @@ const randomPuzzle = () => {
 
     ids = [13, 14, 15, 16, 7];
 
-    for (let i = 0; i < 5;  i++) {
+    for (let i = 0; i < 5; i++) {
         tiles.push({ id: ids[i], sid: ids[i], ch: chars[10 + i] });
     }
 
     ss.tiles = tiles;
 
-    ss.rotoBlocks = sampleSize([1, 2, 3, 4, 5], ss.mode + 1);
+    if (ss.mode === 2) {
+        ss.rotoBlocks = sample([[1, 3, 4], [1, 3, 5], [2, 3, 4], [2, 3, 5]]);
+    } else {
+        ss.rotoBlocks = sampleSize([1, 2, 3, 4, 5], ss.mode + 1);
+    }
 
     do {
         initPoss();
