@@ -95,38 +95,59 @@ const randomPuzzle = () => {
         return group;
     };
 
-    // make tiles
+    let tiles;
 
-    const gr1 = makeGroup();
-    const gr2 = makeGroup();
-    const gr3 = makeGroup();
+    const makeTiles = () => {
+        const gr1 = makeGroup();
+        const gr2 = makeGroup();
+        const gr3 = makeGroup();
 
-    const words = [];
+        const words = [];
 
-    for (let group of [gr1, gr2, gr3]) {
-        group = group.map(n => CYPHER[n + ZERO_AT]);
-        words.push(group.join(''));
-    }
+        for (let group of [gr1, gr2, gr3]) {
+            group = group.map(n => CYPHER[n + ZERO_AT]);
+            words.push(group.join(''));
+        }
 
-    const tiles = [{ id: 1, sid: 1, ch: ss.sum + '' }];
+        tiles = [{ id: 1, sid: 1, ch: ss.sum + '' }];
 
-    const chars = ((words[0] + words[1] + words[2]).split(''));
+        const chars = ((words[0] + words[1] + words[2]).split(''));
 
-    for (let id = 2, i = 0; id <= 6; id++, i++) {
-        tiles.push({ id, sid: id, ch: chars[i] });
-    }
+        for (let id = 2, i = 0; id <= 6; id++, i++) {
+            tiles.push({ id, sid: id, ch: chars[i] });
+        }
 
-    let ids = [8, 9, 10, 11, 12];
+        let ids = [8, 9, 10, 11, 12];
 
-    for (let i = 0; i < 5; i++) {
-        tiles.push({ id: ids[i], sid: ids[i], ch: chars[5 + i] });
-    }
+        for (let i = 0; i < 5; i++) {
+            tiles.push({ id: ids[i], sid: ids[i], ch: chars[5 + i] });
+        }
 
-    ids = [13, 14, 15, 16, 7];
+        ids = [13, 14, 15, 16, 7];
 
-    for (let i = 0; i < 5; i++) {
-        tiles.push({ id: ids[i], sid: ids[i], ch: chars[10 + i] });
-    }
+        for (let i = 0; i < 5; i++) {
+            tiles.push({ id: ids[i], sid: ids[i], ch: chars[10 + i] });
+        }
+    };
+
+    const acceptable = () => {
+        for (const i of [1, 2, 3, 4, 5]) {
+            const block = BLOCKS[i - 1];
+            const tobs = block.map((id) => tiles.find((t) => t.id === id));
+
+            if (tobs.every(tob => tob.ch === tobs[0].ch)) {
+                return false;
+            }
+
+            if (i !== 3 && tobs[0].ch === tobs[1].ch || tobs[0].ch === tobs[2].ch || tobs[1].ch === tobs[2].ch) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    do makeTiles(); while (!acceptable());
 
     ss.tiles = tiles;
 

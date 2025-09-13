@@ -84,7 +84,7 @@
         border-radius: 50%;
         width: 18px;
         aspect-ratio: 1;
-        background: radial-gradient(circle at 30% 30%, #b0b0b0 10%, #404040 25%, #303030 100%);
+        background: radial-gradient(circle at 30% 30%, pink 10%, orangered 25%, darkred 100%);
         transition: opacity 0.1s ease-out;
         transition-delay: 0.6s;
         opacity: 0;
@@ -95,7 +95,7 @@
     }
 
     .rotatable {
-        background: radial-gradient(circle at 30% 30%, pink 10%, orangered 25%, #ff4500 100%);
+        background: radial-gradient(circle at 30% 30%, palegreen 10%, green 25%, darkgreen 100%);
     }
 
     .shake {
