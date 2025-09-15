@@ -68,7 +68,7 @@
     {/if}
 </div>
 {#if !ss.home}
-    <div class="disclaimer">
+    <div class="disclaimer no-highllight">
         <span>MUSIC BY ERIC MATYAS  •  WWW.SOUNDIMAGE.ORG</span>
     </div>
 {/if}
@@ -235,6 +235,7 @@
         opacity: 0.8;
         font-family: Roboto;
         font-size: calc(min(1.5dvh, 10px));
+        touch-action: none;
     }
 
     @font-face {
