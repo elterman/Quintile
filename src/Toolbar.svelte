@@ -1,9 +1,16 @@
 <script>
+    import MusicOff from '$lib/images/Music Off.webp';
+    import MusicOn from '$lib/images/Music On.webp';
+    import Home from '$lib/images/Home.webp';
+    import ResetStats from '$lib/images/Reset Stats.webp';
+    import SoundOff from '$lib/images/Sound Off.webp';
+    import SoundOn from '$lib/images/Sound On.webp';
+    import Surrender from '$lib/images/Surrender.webp';
     import { PROMPT_RESET_STATS, PROMPT_SURRENDER } from './const';
     import { persist } from './shared.svelte';
     import { _sound } from './sound.svelte';
     import { _prompt, _stats, ss } from './state.svelte';
-    import TextButton from './Text Button.svelte';
+    import ToolButton from './Tool Button.svelte';
 
     const onHome = () => {
         _sound.play('plop');
@@ -58,11 +65,11 @@
 </script>
 
 <div class="toolbar">
-    <TextButton id="tb-home" text={['HOME']} onClick={onHome} />
-    <TextButton id="tb-surrender" text={['GIVE', 'UP']} onClick={onSurrender} disabled={ss.over || ss.surrender} />
-    <TextButton id="tb-reset-stats" text={['RESET', 'STATS']} onClick={onResetStats} disabled={_stats.plays === 0} />
-    <TextButton id="tb-sound" text={['SOUND', _sound.sfx ? 'ON' : 'OFF']} onClick={onSound} />
-    <TextButton id="tb-music" text={['MUSIC', _sound.music ? 'ON' : 'OFF']} onClick={onMusic} />
+    <ToolButton id="tb-home" src={Home} onClick={onHome} />
+    <ToolButton id="tb-surrender" src={Surrender} onClick={onSurrender} disabled={ss.over || ss.surrender || ss.showDictionary} />
+    <ToolButton id="tb-reset-stats" src={ResetStats} onClick={onResetStats} disabled={_stats.plays === 0 || ss.showDictionary} />
+    <ToolButton id="tb-sound" src={_sound.sfx ? SoundOn : SoundOff} onClick={onSound} />
+    <ToolButton id="tb-music" src={_sound.music ? MusicOn : MusicOff} onClick={onMusic} />
 </div>
 
 <style>

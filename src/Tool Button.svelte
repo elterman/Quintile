@@ -2,7 +2,7 @@
     import { ss } from './state.svelte';
     import { post } from './utils';
 
-    const { id, src, width = 44, disabled, onClick } = $props();
+    const { id, src, width = 40, disabled, onClick } = $props();
 
     let scale = $state(1);
     let timer3 = $state(false);
@@ -58,10 +58,11 @@
         place-items: center;
         border-radius: 25%;
         transition: transform 0.1s;
+        filter: brightness(0.8);
     }
 
     .button:hover {
-        filter: sepia(0.35);
+        filter: brightness(1);
     }
 
     .disabled {
